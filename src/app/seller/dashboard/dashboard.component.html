@@ -1,0 +1,62 @@
+<mat-toolbar>
+    <span>Seller Dashboard</span>
+</mat-toolbar>
+<mat-card class="my-card">
+    <mat-card-content>
+        <label>Product Name: </label>
+        <mat-form-field appearance="legacy">
+         
+            <mat-label>Product Name</mat-label>
+            <mat-select>
+                <mat-option *ngFor="let product of products" [value]="product">{{product}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <button mat-button color="primary">Get</button>
+    </mat-card-content>
+    <mat-card-actions>
+        <!-- <button mat-raised-button (click)="Save()" color="primary">Save</button> -->
+    </mat-card-actions>
+</mat-card>
+<mat-toolbar>
+    <span>Product Details</span>
+</mat-toolbar>
+<mat-card class="my-card">
+    <mat-card-content>
+       <form class="my-form">
+          <mat-form-field class="full-width">
+             <mat-label>Product Name</mat-label>
+             <input matInput placeholder="Product name" name="pname" required>
+          </mat-form-field>
+          <mat-form-field class="full-width">
+             <mat-label>Short Description</mat-label>
+             <input matInput placeholder="Short Description" name="shortdescription" required>
+          </mat-form-field>
+          <mat-form-field class="full-width">
+             <mat-label>Detailed Description</mat-label>
+             <input matInput placeholder="Detailed Description" name="detaileddescription" required>
+          </mat-form-field>
+          <mat-form-field class="full-width">
+             <mat-label>Category</mat-label>
+             <input matInput placeholder="Category" name="category">
+          </mat-form-field>
+          <mat-form-field class="full-width">
+             <mat-label>Starting Price</mat-label>
+             <input matInput placeholder="Starting Price" name="startingprice">
+          </mat-form-field>
+          <mat-form-field class="full-width">
+             <mat-label>Bid end date</mat-label>
+             <input matInput placeholder="Bid end date" name="bidenddate">
+          </mat-form-field>
+       </form>
+    </mat-card-content>
+ </mat-card>
+<mat-toolbar>
+    <span>Bids</span>
+</mat-toolbar>
+<mat-card class="my-card">
+    <mat-card-content>
+    </mat-card-content>
+    <mat-card-actions>
+        <!-- <button mat-raised-button (click)="Save()" color="primary">Save</button> -->
+    </mat-card-actions>
+</mat-card>

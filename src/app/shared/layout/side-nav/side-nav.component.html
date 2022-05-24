@@ -1,0 +1,20 @@
+<mat-nav-list>
+    <div class="menu">
+      <a mat-list-item (click)="showMenu = !showMenu" [routerLinkActive]="'active'" [routerLink]="['/seller/dashboard']">
+        <mat-icon class="sidenav-icon">dashboard</mat-icon>Dashboard
+      </a>
+      <a mat-list-item (click)="showMenu = !showMenu" [routerLinkActive]="'active'" [routerLink]="['/seller/addproducts']">
+        <mat-icon class="sidenav-icon">assignment</mat-icon>Add Products
+      </a>
+      <a mat-list-item (click)="showMenu = !showMenu" [routerLinkActive]="'active'" [routerLink]="['/seller/listproducts']">
+        <mat-icon class="sidenav-icon">table_chart</mat-icon>List Products
+      </a>
+      <a mat-list-item (click)="showMenu = !showMenu" [routerLinkActive]="'active'" [routerLink]="['/buyer/home']">
+        <mat-icon class="sidenav-icon">home</mat-icon>Home
+      </a>
+      <a mat-list-item (click)="showMenu = !showMenu" [routerLinkActive]="'active'" [routerLink]="['/login']">
+        <mat-icon class="sidenav-icon">exit_to_app</mat-icon>Logout
+      </a>
+    </div>
+  </mat-nav-list>
+  
