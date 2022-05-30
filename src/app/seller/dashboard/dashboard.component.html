@@ -35,7 +35,12 @@
             </mat-form-field>
             <mat-form-field class="full-width">
                 <mat-label>Category</mat-label>
-                <input matInput placeholder="Category" name="category" formControlName="category">
+                <mat-select formControlName="category" required>
+                    <mat-option>- Category -</mat-option>
+                    <mat-option *ngFor="let category of categories" [value]="category">
+                       {{category.name}}
+                    </mat-option>
+                 </mat-select>
             </mat-form-field>
             <mat-form-field class="full-width">
                 <mat-label>Starting Price</mat-label>
@@ -46,7 +51,8 @@
             </mat-form-field>
             <mat-form-field class="full-width">
                 <mat-label>Bid end date</mat-label>
-                <input matInput [matDatepicker]="bidenddate" placeholder="Bid end date" formControlName="bidEndDate">
+                <input matInput [matDatepicker]="bidenddate" placeholder="Bid end date" 
+                formControlName="bidEndDate" [min]="today">
                 <mat-datepicker-toggle matSuffix [for]="bidenddate"></mat-datepicker-toggle>
                 <mat-datepicker #bidenddate></mat-datepicker>
             </mat-form-field>

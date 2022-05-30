@@ -6,37 +6,41 @@
       <form class="my-form" [formGroup]="productForm">
          <mat-form-field class="full-width">
             <mat-label>Product Name</mat-label>
-            <input matInput placeholder="Product name" name="pname" appearance="outline"  
-            formControlName="productName" required maxlength="30" minlength="5">
+            <input matInput placeholder="Product name" name="pname" appearance="outline" formControlName="productName"
+               required maxlength="30" minlength="5">
          </mat-form-field>
          <mat-form-field class="full-width">
             <mat-label>Short Description</mat-label>
-            <input matInput placeholder="Short Description" name="shortdescription"
-            formControlName="shortDesc" required>
+            <input matInput placeholder="Short Description" name="shortdescription" formControlName="shortDesc"
+               required>
          </mat-form-field>
          <mat-form-field class="full-width">
             <mat-label>Detailed Description</mat-label>
-            <input matInput placeholder="Detailed Description" name="detaileddescription"
-            formControlName="detailDesc" required>
+            <input matInput placeholder="Detailed Description" name="detaileddescription" formControlName="detailDesc"
+               required>
          </mat-form-field>
          <mat-form-field class="full-width">
             <mat-label>Category</mat-label>
-            <input matInput placeholder="Category" name="category"
-            formControlName="category" required>
+            <mat-select formControlName="category" required>
+               <mat-option>- Category -</mat-option>
+               <mat-option *ngFor="let category of categories" [value]="category">
+                  {{category.name}}
+               </mat-option>
+            </mat-select>
          </mat-form-field>
          <mat-form-field class="full-width">
             <mat-label>Starting Price</mat-label>
             <input type="number" matInput placeholder="Starting Price" name="startingprice"
-            formControlName="startingPrice" required min="1">
+               formControlName="startingPrice" required min="1">
             <span matPrefix>$ </span>
             <span matSuffix>.00</span>
          </mat-form-field>
          <mat-form-field class="full-width">
             <mat-label>Bid end date</mat-label>
-             <input matInput [matDatepicker]="bidenddate" placeholder="Bid end date"
-             formControlName="bidEndDate" required>
-             <mat-datepicker-toggle matSuffix [for]="bidenddate"></mat-datepicker-toggle>
-             <mat-datepicker #bidenddate></mat-datepicker>
+            <input matInput [matDatepicker]="bidenddate" placeholder="Bid end date" formControlName="bidEndDate"
+               required [min]="today">
+            <mat-datepicker-toggle matSuffix [for]="bidenddate"></mat-datepicker-toggle>
+            <mat-datepicker #bidenddate></mat-datepicker>
          </mat-form-field>
       </form>
    </mat-card-content>

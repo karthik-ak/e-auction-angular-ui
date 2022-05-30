@@ -10,6 +10,14 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
 
+  today = new Date();
+
+  categories: Category[] = [
+    { name: 'Painting', id: 1 },
+    { name: 'Sculptor', id: 2 },
+    { name: 'Ornament', id: 3 }
+  ];
+
   products: string[] = [
     'Product 1',
     'Product 2',
@@ -37,14 +45,20 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.today.setDate(this.today.getDate() + 1);
   }
 
-  getProduct(){
-    
+  getProduct() {
+
   }
 }
 
-export interface PeriodicElement {
+interface Category {
+  name: string;
+  id: number;
+}
+
+interface PeriodicElement {
   bidAmount: number;
   name: string;
   email: string;
