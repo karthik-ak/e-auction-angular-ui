@@ -18,7 +18,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -41,6 +41,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     // MatIconModule,
     // MatListModule,
     // MatMenuModule
+    MatPaginatorModule
   ]
 })
 export class SellerModule { }

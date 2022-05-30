@@ -5,17 +5,13 @@
     <mat-card-content>
         <label>Product Name: </label>
         <mat-form-field appearance="legacy">
-         
             <mat-label>Product Name</mat-label>
             <mat-select>
                 <mat-option *ngFor="let product of products" [value]="product">{{product}}</mat-option>
             </mat-select>
         </mat-form-field>
-        <button mat-button color="primary">Get</button>
+        <button mat-raised-button (click)="getProduct()" color="primary" class="button-row">Get</button>
     </mat-card-content>
-    <mat-card-actions>
-        <!-- <button mat-raised-button (click)="Save()" color="primary">Save</button> -->
-    </mat-card-actions>
 </mat-card>
 <mat-toolbar>
     <span>Product Details</span>
@@ -24,47 +20,79 @@
     <mat-card-content>
         <form class="my-form" [formGroup]="productForm">
             <mat-form-field class="full-width">
-               <mat-label>Product Name</mat-label>
-               <input matInput placeholder="Product name" name="pname" appearance="outline"  
-               formControlName="productName">
+                <mat-label>Product Name</mat-label>
+                <input matInput placeholder="Product name" name="pname" appearance="outline"
+                    formControlName="productName">
             </mat-form-field>
             <mat-form-field class="full-width">
-               <mat-label>Short Description</mat-label>
-               <input matInput placeholder="Short Description" name="shortdescription"
-               formControlName="shortDesc">
+                <mat-label>Short Description</mat-label>
+                <input matInput placeholder="Short Description" name="shortdescription" formControlName="shortDesc">
             </mat-form-field>
             <mat-form-field class="full-width">
-               <mat-label>Detailed Description</mat-label>
-               <input matInput placeholder="Detailed Description" name="detaileddescription"
-               formControlName="detailDesc">
+                <mat-label>Detailed Description</mat-label>
+                <input matInput placeholder="Detailed Description" name="detaileddescription"
+                    formControlName="detailDesc">
             </mat-form-field>
             <mat-form-field class="full-width">
-               <mat-label>Category</mat-label>
-               <input matInput placeholder="Category" name="category"
-               formControlName="category">
+                <mat-label>Category</mat-label>
+                <input matInput placeholder="Category" name="category" formControlName="category">
             </mat-form-field>
             <mat-form-field class="full-width">
-               <mat-label>Starting Price</mat-label>
-               <input type="number" matInput placeholder="Starting Price" name="startingprice"
-               formControlName="startingPrice" min="1">
-               <span matPrefix>$ </span>
-               <span matSuffix>.00</span>
+                <mat-label>Starting Price</mat-label>
+                <input type="number" matInput placeholder="Starting Price" name="startingprice"
+                    formControlName="startingPrice" min="1">
+                <span matPrefix>$ </span>
+                <span matSuffix>.00</span>
             </mat-form-field>
             <mat-form-field class="full-width">
-               <mat-label>Bid end date</mat-label>
-                <input matInput [matDatepicker]="bidenddate" placeholder="Bid end date"
-                formControlName="bidEndDate">
+                <mat-label>Bid end date</mat-label>
+                <input matInput [matDatepicker]="bidenddate" placeholder="Bid end date" formControlName="bidEndDate">
                 <mat-datepicker-toggle matSuffix [for]="bidenddate"></mat-datepicker-toggle>
                 <mat-datepicker #bidenddate></mat-datepicker>
             </mat-form-field>
-         </form>
+        </form>
     </mat-card-content>
- </mat-card>
+</mat-card>
 <mat-toolbar>
     <span>Bids</span>
 </mat-toolbar>
 <mat-card class="my-card">
     <mat-card-content>
+        <div class="mat-elevation-z8">
+            <table mat-table [dataSource]="dataSource">
+
+                <!-- bidAmount Column -->
+                <ng-container matColumnDef="bidAmount">
+                    <th mat-header-cell *matHeaderCellDef> Bid Amount </th>
+                    <td mat-cell *matCellDef="let element"> {{element.bidAmount}} </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+
+                <!-- email Column -->
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef> Email </th>
+                    <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+                </ng-container>
+
+                <!-- mobile Column -->
+                <ng-container matColumnDef="mobile">
+                    <th mat-header-cell *matHeaderCellDef> Mobile </th>
+                    <td mat-cell *matCellDef="let element"> {{element.mobile}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                aria-label="Select page of periodic elements">
+            </mat-paginator>
+        </div>
     </mat-card-content>
     <mat-card-actions>
         <!-- <button mat-raised-button (click)="Save()" color="primary">Save</button> -->

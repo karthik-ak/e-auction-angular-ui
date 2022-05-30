@@ -7,11 +7,10 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
-import {MatInputModule} from '@angular/material/input';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatCardModule} from '@angular/material/card';
-import {MatRadioModule} from '@angular/material/radio';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
+import { MatRadioModule } from '@angular/material/radio';
 import { RegisterComponent } from './register/register.component';
 import { MatNativeDateModule } from '@angular/material/core';
 
@@ -32,7 +31,6 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatToolbarModule,
     MatCardModule,
     MatRadioModule,
-    MatDatepickerModule,
     MatNativeDateModule
   ],
   providers: [],
