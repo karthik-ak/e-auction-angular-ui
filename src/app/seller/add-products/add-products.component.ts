@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-add-products',
@@ -8,9 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddProductsComponent implements OnInit {
 
+  productForm = new FormGroup({
+    productName: new FormControl(),
+    shortDesc: new FormControl(),
+    detailDesc: new FormControl(),
+    category: new FormControl(),
+    startingPrice: new FormControl(),
+    bidEndDate: new FormControl()
+  });
+
   constructor() { }
 
   ngOnInit(): void {
   }
-  Save(){}
+
+  Save(){
+  }
 }

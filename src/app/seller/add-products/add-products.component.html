@@ -3,51 +3,44 @@
 </mat-toolbar>
 <mat-card class="my-card">
    <mat-card-content>
-      <form class="my-form">
+      <form class="my-form" [formGroup]="productForm">
          <mat-form-field class="full-width">
             <mat-label>Product Name</mat-label>
-            <input matInput placeholder="Product name" name="pname" appearance="outline" required>
+            <input matInput placeholder="Product name" name="pname" appearance="outline"  
+            formControlName="productName" required maxlength="30" minlength="5">
          </mat-form-field>
          <mat-form-field class="full-width">
             <mat-label>Short Description</mat-label>
-            <input matInput placeholder="Short Description" name="shortdescription" required>
+            <input matInput placeholder="Short Description" name="shortdescription"
+            formControlName="shortDesc" required>
          </mat-form-field>
          <mat-form-field class="full-width">
             <mat-label>Detailed Description</mat-label>
-            <input matInput placeholder="Detailed Description" name="detaileddescription" required>
+            <input matInput placeholder="Detailed Description" name="detaileddescription"
+            formControlName="detailDesc" required>
          </mat-form-field>
          <mat-form-field class="full-width">
             <mat-label>Category</mat-label>
-            <input matInput placeholder="Category" name="category">
+            <input matInput placeholder="Category" name="category"
+            formControlName="category" required>
          </mat-form-field>
          <mat-form-field class="full-width">
             <mat-label>Starting Price</mat-label>
-            <input matInput placeholder="Starting Price" name="startingprice">
+            <input type="number" matInput placeholder="Starting Price" name="startingprice"
+            formControlName="startingPrice" required min="1">
+            <span matPrefix>$ </span>
+            <span matSuffix>.00</span>
          </mat-form-field>
          <mat-form-field class="full-width">
             <mat-label>Bid end date</mat-label>
-            <input matInput placeholder="Bid end date" name="bidenddate">
+             <input matInput [matDatepicker]="bidenddate" placeholder="Bid end date"
+             formControlName="bidEndDate" required>
+             <mat-datepicker-toggle matSuffix [for]="bidenddate"></mat-datepicker-toggle>
+             <mat-datepicker #bidenddate></mat-datepicker>
          </mat-form-field>
-         <!-- <section class="example-section">
-             <label class="full-width">Gender:</label>
-             <br>
-             <br>
-             <mat-radio-group>
-                <mat-radio-button class="example-margin" value="after">Male</mat-radio-button>
-                <mat-radio-button class="example-margin" value="before">Female</mat-radio-button>
-                <mat-radio-button class="example-margin" value="before">Other</mat-radio-button>
-             </mat-radio-group>
-          </section> -->
-         <!-- <mat-form-field class="full-width">
-             <mat-label>Date of Birth</mat-label>
-             <input matInput [matDatepicker]="picker" placeholder="Choose a date">
-             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-             <mat-datepicker #picker></mat-datepicker>
-          </mat-form-field> -->
-
       </form>
    </mat-card-content>
    <mat-card-actions>
-      <button mat-raised-button (click)="Save()" color="primary">Save</button>
+      <button mat-raised-button (click)="Save()" color="primary" [disabled]="!productForm.valid">Save</button>
    </mat-card-actions>
 </mat-card>
