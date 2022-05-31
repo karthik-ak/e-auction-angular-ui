@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,14 +10,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { MatRadioModule } from '@angular/material/radio';
-import { RegisterComponent } from './register/register.component';
 import { MatNativeDateModule } from '@angular/material/core';
+import { RegisterModule } from './register/register.module';
 
 
 @NgModule({
   declarations: [
-    AppComponent,
-    RegisterComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -27,11 +25,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     HttpClientModule,
     CoreModule,
     SharedModule,
-    MatInputModule,
-    MatToolbarModule,
-    MatCardModule,
-    MatRadioModule,
-    MatNativeDateModule
+    RegisterModule
   ],
   providers: [],
   bootstrap: [AppComponent]

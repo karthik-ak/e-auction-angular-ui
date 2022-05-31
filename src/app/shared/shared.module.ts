@@ -7,7 +7,6 @@ import { LayoutComponent } from './layout/layout.component';
 import { SideNavComponent } from './layout/side-nav/side-nav.component';
 import { TopNavComponent } from './layout/top-nav/top-nav.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
-
 import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
@@ -19,6 +18,9 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatTableModule} from '@angular/material/table';
 import {MatSelectModule} from '@angular/material/select';
 import {MatButtonModule} from '@angular/material/button';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   imports: [
@@ -36,7 +38,10 @@ import {MatButtonModule} from '@angular/material/button';
     MatMenuModule,
     MatTableModule,
     MatSelectModule,
-    MatButtonModule
+    MatButtonModule,
+    MatPaginatorModule,
+    ReactiveFormsModule,
+    MatNativeDateModule
   ],
   declarations:
     [
@@ -62,7 +67,11 @@ import {MatButtonModule} from '@angular/material/button';
     MatMenuModule,
     MatTableModule,
     MatSelectModule,
-    MatButtonModule
+    MatButtonModule,
+    MatPaginatorModule,
+    ReactiveFormsModule,
+    MatNativeDateModule,
+    TopNavComponent
   ]
 })
 export class SharedModule { }

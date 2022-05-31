@@ -1,10 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './core/auth.guard';
-import { RegisterComponent } from './register/register.component';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 
 const routes: Routes = [
+  {
+    path: '',
+    loadChildren: () =>
+      import('./login/login.module').then((m) => m.LoginModule),
+      data: { icon: 'dashboard', text: 'Dashboard' }
+  },
   {
     path: 'seller',
     loadChildren: () =>
@@ -20,12 +25,6 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: '',
-    loadChildren: () =>
-      import('./login/login.module').then((m) => m.LoginModule),
-      data: { icon: 'dashboard', text: 'Dashboard' }
-  },
-  {
     path: 'login',
     loadChildren: () =>
       import('./login/login.module').then((m) => m.LoginModule),
@@ -34,8 +33,8 @@ const routes: Routes = [
   {
     path: 'register',
     loadChildren: () =>
-      import('./login/login.module').then((m) => m.LoginModule),
-      data: { icon: 'dashboard', text: 'Dashboard' }
+      import('./register/register.module').then((m) => m.RegisterModule),
+      data: { icon: 'register', text: 'register' }
   },
   {
     path: '**',

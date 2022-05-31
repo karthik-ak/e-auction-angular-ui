@@ -17,4 +17,9 @@ export class LoginComponent implements OnInit {
     localStorage.setItem('isLoggedin', 'true');
     this.router.navigate(['/seller/dashboard']);
   }
+
+  onSignUp() {
+    localStorage.setItem('isLoggedin', 'true');
+    this.router.navigate(['/register/register']);
+  }
 }
