@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
@@ -30,7 +30,16 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     detailDesc: new FormControl(),
     category: new FormControl(),
     startingPrice: new FormControl(),
-    bidEndDate: new FormControl()
+    bidEndDate: new FormControl(),
+    firstName: new FormControl(),
+    lastName: new FormControl(),
+    address: new FormControl(),
+    city: new FormControl(),
+    state: new FormControl(),
+    pinCode: new FormControl('',[Validators.pattern("^[0-9]{6,6}$"),Validators.minLength(6), Validators.maxLength(6)]),
+    phone: new FormControl('',[Validators.pattern("^[0-9]{10,10}$"),Validators.minLength(10), Validators.maxLength(10)]),
+    email: new FormControl('', [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
+    biddingPrice: new FormControl(),
   });
 
   displayedColumns: string[] = ['bidAmount', 'name', 'email', 'mobile'];
@@ -51,6 +60,14 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   getProduct() {
 
+  }
+
+  Update(){
+
+  }
+
+  Clear(){
+    
   }
 }
 

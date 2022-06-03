@@ -1,5 +1,5 @@
 <app-top-nav></app-top-nav>
-<mat-toolbar>
+<mat-toolbar class="mt-5">
    <span>Registration</span>
 </mat-toolbar>
 <mat-card class="my-card">
@@ -20,34 +20,10 @@
             <mat-hint align="start">Should have minimum 5 and maximum 25 characters</mat-hint>
          </mat-form-field>
          <mat-form-field class="full-width">
-            <mat-label>Address</mat-label>
-            <input matInput placeholder="Address" name="address" required formControlName="address">
-         </mat-form-field>
-         <mat-form-field class="full-width">
-            <mat-label>City</mat-label>
-            <input matInput placeholder="City" name="city" required formControlName="city">
-         </mat-form-field>
-         <mat-form-field class="full-width">
-            <mat-label>State</mat-label>
-            <input matInput placeholder="State" name="state" required formControlName="state">
-         </mat-form-field>
-         <mat-form-field class="full-width">
-            <mat-label>Pin Code</mat-label>
-            <input type="number" matInput placeholder="Pin Code" name="pinCode" required formControlName="pinCode">
-            <mat-hint align="start">Ex. 685612</mat-hint>
-         </mat-form-field>
-         <mat-form-field class="full-width">
-            <mat-label>Phone</mat-label>
-            <input type="number" matInput placeholder="Phone/Mobile" name="phone" required formControlName="phone">
-            <mat-error *ngIf="registerForm.controls['phone'].invalid && registerForm.controls['phone'].value > 0">
-               Please enter a valid phone number
-            </mat-error>
-            <mat-hint align="start">Ex. 7895056555</mat-hint>
-         </mat-form-field>
-         <mat-form-field class="full-width">
             <mat-label>Email</mat-label>
             <input type="email" matInput placeholder="Email" name="email" required formControlName="email">
-            <mat-error *ngIf="registerForm.controls['email'].invalid  && registerForm.controls['email'].value?.length > 0">
+            <mat-error
+               *ngIf="registerForm.controls['email'].invalid  && registerForm.controls['email'].value?.length > 0">
                Please enter a valid email address
             </mat-error>
             <mat-hint align="start">Ex. johan@gmail.com</mat-hint>
@@ -63,9 +39,10 @@
                <mat-radio-button value="buyer">Buyer</mat-radio-button>
             </mat-radio-group>
          </div>
+         <mat-card-actions class="text-right">
+            <button mat-raised-button (click)="register()" color="primary" [disabled]="!registerForm.valid">Register</button>
+            <button mat-raised-button (click)="Clear()" color="normal">Clear</button>
+         </mat-card-actions>
       </form>
    </mat-card-content>
-   <mat-card-actions>
-      <button mat-raised-button (click)="register()" color="primary" [disabled]="!registerForm.valid">Register</button>
-   </mat-card-actions>
 </mat-card>

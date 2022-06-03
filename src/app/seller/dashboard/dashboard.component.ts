@@ -33,7 +33,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     bidEndDate: new FormControl()
   });
 
-  displayedColumns: string[] = ['bidAmount', 'name', 'email', 'mobile'];
+  displayedColumns: string[] = ['bidAmount', 'name', 'email', 'mobile', 'action'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
 
   @ViewChild(MatPaginator)
@@ -50,6 +50,22 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   getProduct() {
+
+  }
+
+  Delete(){
+
+  }
+
+  Update(){
+    
+  }
+
+  Accept(){
+
+  }
+
+  Reject(){
 
   }
 }

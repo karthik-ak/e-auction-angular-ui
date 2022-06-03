@@ -19,43 +19,58 @@
 <mat-card class="my-card">
     <mat-card-content>
         <form class="my-form" [formGroup]="productForm">
-            <mat-form-field class="full-width">
-                <mat-label>Product Name</mat-label>
-                <input matInput placeholder="Product name" name="pname" appearance="outline"
-                    formControlName="productName">
-            </mat-form-field>
-            <mat-form-field class="full-width">
-                <mat-label>Short Description</mat-label>
-                <input matInput placeholder="Short Description" name="shortdescription" formControlName="shortDesc">
-            </mat-form-field>
-            <mat-form-field class="full-width">
-                <mat-label>Detailed Description</mat-label>
-                <input matInput placeholder="Detailed Description" name="detaileddescription"
-                    formControlName="detailDesc">
-            </mat-form-field>
-            <mat-form-field class="full-width">
-                <mat-label>Category</mat-label>
-                <mat-select formControlName="category" required>
-                    <mat-option>- Category -</mat-option>
-                    <mat-option *ngFor="let category of categories" [value]="category">
-                       {{category.name}}
-                    </mat-option>
-                 </mat-select>
-            </mat-form-field>
-            <mat-form-field class="full-width">
-                <mat-label>Starting Price</mat-label>
-                <input type="number" matInput placeholder="Starting Price" name="startingprice"
-                    formControlName="startingPrice" min="1">
-                <span matPrefix>$ </span>
-                <span matSuffix>.00</span>
-            </mat-form-field>
-            <mat-form-field class="full-width">
-                <mat-label>Bid end date</mat-label>
-                <input matInput [matDatepicker]="bidenddate" placeholder="Bid end date" 
-                formControlName="bidEndDate" [min]="today">
-                <mat-datepicker-toggle matSuffix [for]="bidenddate"></mat-datepicker-toggle>
-                <mat-datepicker #bidenddate></mat-datepicker>
-            </mat-form-field>
+            <div class="row">
+                <div class="col-5">
+                    <mat-form-field class="full-width">
+                        <mat-label>Product Name</mat-label>
+                        <input matInput placeholder="Product name" name="pname" appearance="outline"
+                            formControlName="productName" required maxlength="30" minlength="5">
+                        <mat-hint align="end">{{productForm.controls['productName'].value?.length}} / 30</mat-hint>
+                        <mat-hint align="start">Should have minimum 5 and maximum 30 characters</mat-hint>
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <mat-label>Short Description</mat-label>
+                        <input matInput placeholder="Short Description" name="shortdescription"
+                            formControlName="shortDesc" required>
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <mat-label>Detailed Description</mat-label>
+                        <input matInput placeholder="Detailed Description" name="detaileddescription"
+                            formControlName="detailDesc" required>
+                    </mat-form-field>
+                </div>
+                <div class="col-4">
+                    <mat-form-field class="full-width">
+                        <mat-label>Category</mat-label>
+                        <mat-select formControlName="category" required>
+                            <mat-option>- Category -</mat-option>
+                            <mat-option *ngFor="let category of categories" [value]="category">
+                                {{category.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <mat-label>Starting Price</mat-label>
+                        <input type="number" matInput placeholder="Starting Price" name="startingprice"
+                            formControlName="startingPrice" required min="1">
+                        <span matPrefix>$ </span>
+                        <span matSuffix>.00</span>
+                    </mat-form-field>
+                    <mat-form-field class="full-width">
+                        <mat-label>Bid End Date</mat-label>
+                        <input matInput [matDatepicker]="bidenddate" placeholder="Bid End Date"
+                            formControlName="bidEndDate" required [min]="today">
+                        <mat-datepicker-toggle matSuffix [for]="bidenddate"></mat-datepicker-toggle>
+                        <mat-datepicker #bidenddate></mat-datepicker>
+                    </mat-form-field>
+                    <mat-card-actions class="text-right">
+                        <button mat-raised-button (click)="Delete()" color="primary"
+                            [disabled]="!productForm.valid">Delete</button>
+                        <button mat-raised-button (click)="Update()" color="primary"
+                            [disabled]="!productForm.valid">Update</button>
+                    </mat-card-actions>
+                </div>
+            </div>
         </form>
     </mat-card-content>
 </mat-card>
@@ -65,7 +80,7 @@
 <mat-card class="my-card">
     <mat-card-content>
         <div class="mat-elevation-z8">
-            <table mat-table [dataSource]="dataSource">
+            <table mat-table [dataSource]="dataSource" class="text-center">
 
                 <!-- bidAmount Column -->
                 <ng-container matColumnDef="bidAmount">
@@ -89,6 +104,17 @@
                 <ng-container matColumnDef="mobile">
                     <th mat-header-cell *matHeaderCellDef> Mobile </th>
                     <td mat-cell *matCellDef="let element"> {{element.mobile}} </td>
+                </ng-container>
+
+                <!-- Action Column -->
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                    <td mat-cell *matCellDef="let element">
+                        <mat-card-actions>
+                            <button mat-raised-button (click)="Accept()" color="primary">Accept</button>
+                            <button mat-raised-button (click)="Reject()" color="primary">Reject</button>
+                        </mat-card-actions>
+                    </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

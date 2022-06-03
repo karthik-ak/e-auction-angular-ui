@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add-products',
@@ -7,7 +7,7 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./add-products.component.scss']
 })
 export class AddProductsComponent implements OnInit {
-  
+
   today = new Date();
 
   productForm = new FormGroup({
@@ -16,7 +16,15 @@ export class AddProductsComponent implements OnInit {
     detailDesc: new FormControl(),
     category: new FormControl(),
     startingPrice: new FormControl(),
-    bidEndDate: new FormControl()
+    bidEndDate: new FormControl(),
+    firstName: new FormControl(),
+    lastName: new FormControl(),
+    address: new FormControl(),
+    city: new FormControl(),
+    state: new FormControl(),
+    pinCode: new FormControl('', [Validators.pattern("^[0-9]{6,6}$"), Validators.minLength(6), Validators.maxLength(6)]),
+    phone: new FormControl('', [Validators.pattern("^[0-9]{10,10}$"), Validators.minLength(10), Validators.maxLength(10)]),
+    email: new FormControl('', [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")])
   });
 
   categories: Category[] = [
@@ -32,6 +40,10 @@ export class AddProductsComponent implements OnInit {
   }
 
   Save() {
+  }
+
+  Clear(){
+    this.productForm.reset();
   }
 }
 
