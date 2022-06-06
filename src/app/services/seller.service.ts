@@ -18,7 +18,7 @@ export class SellerService {
     return this.http.get<Product>(`${environment.apiUrl}Products/${id}`);
   }
 
-  // UpdateProduct(product: Product) {
-  //   this.http.put<Product>(`${environment.apiUrl}Products/${id}`);
-  // }
+  UpdateProduct(product: Product) {
+    return this.http.put<Product>(`${environment.apiUrl}Products`, product);
+  }
 }

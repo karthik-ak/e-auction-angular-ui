@@ -22,11 +22,13 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   ];
 
   productForm = new FormGroup({
+    id: new FormControl(0),
     name: new FormControl(),
     description: new FormControl(),
     summary: new FormControl(),
     category: new FormControl(),
     price: new FormControl(),
+    imageFile: new FormControl(''),
     bidEndDate: new FormControl('06/06/2022')
   });
 
@@ -62,11 +64,22 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     }, error => { throw error });
   }
 
-  Delete() {
-
+  Update() {
+    if (this.productForm.valid) {
+      this.sellerService.UpdateProduct(this.productForm.value).subscribe(data => {
+        if (data) {
+          this.getProducts();
+          alert("Product details updated successfully!");
+        }
+      },
+        error => {
+          alert("Product details update failed!");
+          throw error;
+        });
+    }
   }
 
-  Update() {
+  Delete() {
 
   }
 
