@@ -1,7 +1,9 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { Product } from 'src/app/model/product.model';
+import { SellerService } from 'src/app/services/seller.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,7 +11,8 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
-
+  products: Array<Product> = [];
+  productSelectControl = new FormControl(null, Validators.required);
   today = new Date();
 
   categories: Category[] = [
@@ -18,19 +21,13 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     { name: 'Ornament', id: 3 }
   ];
 
-  products: string[] = [
-    'Product 1',
-    'Product 2',
-    'Product 3',
-    'Product 4'];
-
   productForm = new FormGroup({
-    productName: new FormControl(),
-    shortDesc: new FormControl(),
-    detailDesc: new FormControl(),
+    name: new FormControl(),
+    description: new FormControl(),
+    summary: new FormControl(),
     category: new FormControl(),
-    startingPrice: new FormControl(),
-    bidEndDate: new FormControl()
+    price: new FormControl(),
+    bidEndDate: new FormControl('06/06/2022')
   });
 
   displayedColumns: string[] = ['bidAmount', 'name', 'email', 'mobile', 'action'];
@@ -43,29 +40,41 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  constructor() { }
+  constructor(private sellerService: SellerService) { }
 
   ngOnInit(): void {
+    this.getProducts();
     this.today.setDate(this.today.getDate() + 1);
   }
 
+  getProducts() {
+    this.sellerService.GetProducts().subscribe(data => {
+      this.products = data;
+    },
+      error => {
+        throw error;
+      });
+  }
+
   getProduct() {
+    this.sellerService.GetProduct(this.productSelectControl.value).subscribe(data => {
+      this.productForm.reset(data);
+    }, error => { throw error });
+  }
+
+  Delete() {
 
   }
 
-  Delete(){
+  Update() {
 
   }
 
-  Update(){
-    
-  }
-
-  Accept(){
+  Accept() {
 
   }
 
-  Reject(){
+  Reject() {
 
   }
 }

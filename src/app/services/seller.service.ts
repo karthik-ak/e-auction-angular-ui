@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
+import { Product } from '../model/product.model';
 
 @Injectable({
   providedIn: 'root'
@@ -7,4 +9,16 @@ import { Injectable } from '@angular/core';
 export class SellerService {
 
   constructor(private http: HttpClient) { }
+
+  GetProducts() {
+    return this.http.get<Product[]>(`${environment.apiUrl}Products`);
+  }
+
+  GetProduct(id: string) {
+    return this.http.get<Product>(`${environment.apiUrl}Products/${id}`);
+  }
+
+  // UpdateProduct(product: Product) {
+  //   this.http.put<Product>(`${environment.apiUrl}Products/${id}`);
+  // }
 }
