@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { SellerService } from 'src/app/services/seller.service';
 
 @Component({
   selector: 'app-add-products',
@@ -9,14 +10,21 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class AddProductsComponent implements OnInit {
 
   today = new Date();
+  categories: Category[] = [
+    { name: 'Painting', id: 1 },
+    { name: 'Sculptor', id: 2 },
+    { name: 'Ornament', id: 3 }
+  ];
 
   productForm = new FormGroup({
-    productName: new FormControl(),
-    shortDesc: new FormControl(),
-    detailDesc: new FormControl(),
+    id: new FormControl(''),
+    name: new FormControl(),
+    description: new FormControl(),
+    summary: new FormControl(),
     category: new FormControl(),
-    startingPrice: new FormControl(),
-    bidEndDate: new FormControl(),
+    price: new FormControl(),
+    imageFile: new FormControl(''),
+    bidEndDate: new FormControl(''),
     firstName: new FormControl(),
     lastName: new FormControl(),
     address: new FormControl(),
@@ -27,22 +35,27 @@ export class AddProductsComponent implements OnInit {
     email: new FormControl('', [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")])
   });
 
-  categories: Category[] = [
-    { name: 'Painting', id: 1 },
-    { name: 'Sculptor', id: 2 },
-    { name: 'Ornament', id: 3 }
-  ];
-
-  constructor() { }
+  constructor(private sellerService: SellerService) { }
 
   ngOnInit(): void {
     this.today.setDate(this.today.getDate() + 1);
   }
 
   Save() {
+    if (this.productForm.valid) {
+      this.sellerService.AddProduct(this.productForm.value).subscribe(data => {
+        if (data) {
+          alert("Product added successfully!");
+        }
+      },
+        error => {
+          alert(`Product adding failed!`);
+          throw error;
+        });
+    }
   }
 
-  Clear(){
+  Clear() {
     this.productForm.reset();
   }
 }

@@ -8,26 +8,26 @@
             <div class="col-4">
                <mat-form-field class="full-width">
                   <mat-label>Product Name</mat-label>
-                  <input matInput placeholder="Product name" name="pname" appearance="outline"
-                     formControlName="productName" required maxlength="30" minlength="5">
-                  <mat-hint align="end">{{productForm.controls['productName'].value?.length}} / 30</mat-hint>
+                  <input matInput placeholder="Product name" name="pname" appearance="outline" formControlName="name"
+                     required maxlength="30" minlength="5">
+                  <mat-hint align="end">{{productForm.controls['name'].value?.length}} / 30</mat-hint>
                   <mat-hint align="start">Should have minimum 5 and maximum 30 characters</mat-hint>
                </mat-form-field>
                <mat-form-field class="full-width">
                   <mat-label>Short Description</mat-label>
-                  <input matInput placeholder="Short Description" name="shortdescription" formControlName="shortDesc"
+                  <input matInput placeholder="Short Description" name="shortdescription" formControlName="description"
                      required>
                </mat-form-field>
                <mat-form-field class="full-width">
                   <mat-label>Detailed Description</mat-label>
                   <input matInput placeholder="Detailed Description" name="detaileddescription"
-                     formControlName="detailDesc" required>
+                     formControlName="summary" required>
                </mat-form-field>
                <mat-form-field class="full-width">
                   <mat-label>Category</mat-label>
                   <mat-select formControlName="category" required>
                      <mat-option>- Category -</mat-option>
-                     <mat-option *ngFor="let category of categories" [value]="category">
+                     <mat-option *ngFor="let category of categories" [value]="category.name">
                         {{category.name}}
                      </mat-option>
                   </mat-select>
@@ -35,7 +35,7 @@
                <mat-form-field class="full-width">
                   <mat-label>Starting Price</mat-label>
                   <input type="number" matInput placeholder="Starting Price" name="startingprice"
-                     formControlName="startingPrice" required min="1">
+                     formControlName="price" required min="1">
                   <span matPrefix>$ </span>
                   <span matSuffix>.00</span>
                </mat-form-field>

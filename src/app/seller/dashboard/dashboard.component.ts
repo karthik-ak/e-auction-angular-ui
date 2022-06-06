@@ -14,7 +14,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   products: Array<Product> = [];
   productSelectControl = new FormControl(null, Validators.required);
   today = new Date();
-
   categories: Category[] = [
     { name: 'Painting', id: 1 },
     { name: 'Sculptor', id: 2 },
@@ -22,14 +21,14 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   ];
 
   productForm = new FormGroup({
-    id: new FormControl(0),
+    id: new FormControl(''),
     name: new FormControl(),
     description: new FormControl(),
     summary: new FormControl(),
     category: new FormControl(),
     price: new FormControl(),
     imageFile: new FormControl(''),
-    bidEndDate: new FormControl('06/06/2022')
+    bidEndDate: new FormControl('')
   });
 
   displayedColumns: string[] = ['bidAmount', 'name', 'email', 'mobile', 'action'];
