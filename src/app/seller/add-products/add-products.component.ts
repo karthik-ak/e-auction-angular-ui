@@ -18,19 +18,18 @@ export class AddProductsComponent implements OnInit {
 
   productForm = new FormGroup({
     id: new FormControl(''),
-    name: new FormControl(),
-    description: new FormControl(),
-    summary: new FormControl(),
+    productName: new FormControl(),
+    shortDescription: new FormControl(),
+    longDescription: new FormControl(),
     category: new FormControl(),
-    price: new FormControl(),
-    imageFile: new FormControl(''),
-    bidEndDate: new FormControl(''),
+    startingPrice: new FormControl(),
+    bidEndDate: new FormControl(),
     firstName: new FormControl(),
     lastName: new FormControl(),
     address: new FormControl(),
     city: new FormControl(),
     state: new FormControl(),
-    pinCode: new FormControl('', [Validators.pattern("^[0-9]{6,6}$"), Validators.minLength(6), Validators.maxLength(6)]),
+    pin: new FormControl('', [Validators.pattern("^[0-9]{6,6}$"), Validators.minLength(6), Validators.maxLength(6)]),
     phone: new FormControl('', [Validators.pattern("^[0-9]{10,10}$"), Validators.minLength(10), Validators.maxLength(10)]),
     email: new FormControl('', [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")])
   });
@@ -45,13 +44,16 @@ export class AddProductsComponent implements OnInit {
     if (this.productForm.valid) {
       this.sellerService.AddProduct(this.productForm.value).subscribe(data => {
         if (data) {
+          this.productForm.reset();
           alert("Product added successfully!");
         }
       },
         error => {
+          //this.productForm.reset();
           alert(`Product adding failed!`);
           throw error;
-        });
+        },
+      );
     }
   }
 

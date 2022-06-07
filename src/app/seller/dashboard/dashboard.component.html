@@ -8,7 +8,7 @@
             <mat-label>Product Name</mat-label>
             <mat-select [formControl]="productSelectControl" required>
                 <mat-option>--Select--</mat-option>
-                <mat-option *ngFor="let product of products" [value]="product.id">{{product.name}}</mat-option>
+                <mat-option *ngFor="let product of products" [value]="product.id">{{product.productName}}</mat-option>
             </mat-select>
         </mat-form-field>
         <button mat-raised-button (click)="getProduct()" color="primary" class="button-row"
@@ -26,19 +26,19 @@
                     <mat-form-field class="full-width">
                         <mat-label>Product Name</mat-label>
                         <input matInput placeholder="Product name" name="pname" appearance="outline"
-                            formControlName="name" required maxlength="30" minlength="5">
-                        <mat-hint align="end">{{productForm.controls['name'].value?.length}} / 30</mat-hint>
+                            formControlName="productName" required maxlength="30" minlength="5">
+                        <mat-hint align="end">{{productForm.controls['productName'].value?.length}} / 30</mat-hint>
                         <mat-hint align="start">Should have minimum 5 and maximum 30 characters</mat-hint>
                     </mat-form-field>
                     <mat-form-field class="full-width">
                         <mat-label>Short Description</mat-label>
                         <input matInput placeholder="Short Description" name="shortdescription"
-                            formControlName="description" required>
+                            formControlName="shortDescription" required>
                     </mat-form-field>
                     <mat-form-field class="full-width">
                         <mat-label>Detailed Description</mat-label>
                         <input matInput placeholder="Detailed Description" name="detaileddescription"
-                            formControlName="summary" required>
+                            formControlName="longDescription" required>
                     </mat-form-field>
                 </div>
                 <div class="col-4">
@@ -46,15 +46,15 @@
                         <mat-label>Category</mat-label>
                         <mat-select formControlName="category" required>
                             <mat-option>- Category -</mat-option>
-                            <mat-option *ngFor="let category of categories" [value]="category.name">
+                            <mat-option *ngFor="let category of categories" [value]="category.id">
                                 {{category.name}}
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field class="full-width">
                         <mat-label>Starting Price</mat-label>
-                        <input type="number" matInput placeholder="Starting Price" name="price"
-                            formControlName="price" required min="1">
+                        <input type="number" matInput placeholder="Starting Price" name="startingPrice"
+                            formControlName="startingPrice" required min="1">
                         <span matPrefix>$ </span>
                         <span matSuffix>.00</span>
                     </mat-form-field>
@@ -67,7 +67,7 @@
                     </mat-form-field>
                     <mat-card-actions class="text-right">
                         <button mat-raised-button (click)="Delete()" color="primary"
-                            [disabled]="!productForm.valid">Delete</button>
+                            [disabled]="!productForm.valid || dataSource.data.length > 0">Delete</button>
                         <button mat-raised-button (click)="Update()" color="primary"
                             [disabled]="!productForm.valid">Update</button>
                     </mat-card-actions>

@@ -22,13 +22,20 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   productForm = new FormGroup({
     id: new FormControl(''),
-    name: new FormControl(),
-    description: new FormControl(),
-    summary: new FormControl(),
+    productName: new FormControl(),
+    shortDescription: new FormControl(),
+    longDescription: new FormControl(),
     category: new FormControl(),
-    price: new FormControl(),
-    imageFile: new FormControl(''),
-    bidEndDate: new FormControl('')
+    startingPrice: new FormControl(),
+    bidEndDate: new FormControl(),
+    firstName: new FormControl(),
+    lastName: new FormControl(),
+    address: new FormControl(),
+    city: new FormControl(),
+    state: new FormControl(),
+    pin: new FormControl('', [Validators.pattern("^[0-9]{6,6}$"), Validators.minLength(6), Validators.maxLength(6)]),
+    phone: new FormControl('', [Validators.pattern("^[0-9]{10,10}$"), Validators.minLength(10), Validators.maxLength(10)]),
+    email: new FormControl('', [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")])
   });
 
   displayedColumns: string[] = ['bidAmount', 'name', 'email', 'mobile', 'action'];
@@ -79,7 +86,19 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   Delete() {
-
+    if (this.productForm.valid) {
+      this.sellerService.DeleteProduct(this.productForm.value.id).subscribe(data => {
+        if (data) {
+          this.productForm.reset();
+          this.getProducts();
+          alert("Product deleted successfully!");
+        }
+      },
+        error => {
+          alert("Product delete failed!");
+          throw error;
+        });
+    }
   }
 
   Accept() {

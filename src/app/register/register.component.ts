@@ -32,7 +32,7 @@ export class RegisterComponent implements OnInit {
   }
 
   Clear(){
-    
+    this.registerForm.reset();
   }
 
 }
