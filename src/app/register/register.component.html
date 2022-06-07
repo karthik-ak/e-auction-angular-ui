@@ -30,17 +30,23 @@
          </mat-form-field>
          <mat-form-field class="full-width">
             <mat-label>Password</mat-label>
-            <input matInput placeholder="Login Password" name="password" required formControlName="password">
+            <input matInput [type]="hide ? 'password' : 'text'" placeholder="Login Password" name="password" required
+               formControlName="password" minlength="8" maxlength="15">
+            <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            <mat-hint align="end">{{registerForm.controls['password'].value?.length}} / 20</mat-hint>
+            <mat-hint align="start">Should have atleast 8 characters</mat-hint>
          </mat-form-field>
          <div>
             <label>Register as:</label>
-            <mat-radio-group required formControlName="role">
-               <mat-radio-button value="seller">Seller</mat-radio-button>
-               <mat-radio-button value="buyer">Buyer</mat-radio-button>
+            <mat-radio-group required formControlName="roleId">
+               <mat-radio-button *ngFor="let role of roles" [value]="role.id">
+                  {{role.name}}
+               </mat-radio-button>
             </mat-radio-group>
          </div>
          <mat-card-actions class="text-right">
-            <button mat-raised-button (click)="register()" color="primary" [disabled]="!registerForm.valid">Register</button>
+            <button mat-raised-button (click)="register()" color="primary"
+               [disabled]="!registerForm.valid">Register</button>
             <button mat-raised-button (click)="Clear()" color="normal">Clear</button>
          </mat-card-actions>
       </form>

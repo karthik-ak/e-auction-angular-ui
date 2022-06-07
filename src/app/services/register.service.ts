@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
+import { User } from '../model/user';
 
 @Injectable({
   providedIn: 'root'
@@ -8,13 +10,7 @@ export class RegisterService {
 
   constructor(private http: HttpClient) { }
 
-  login(username: string, password: string) {
-    return this.http.post<any>(`${environment.apiUrl}/users/authenticate`, { username, password })
-      .pipe(map(user => {
-        // store user details and jwt token in local storage to keep user logged in between page refreshes
-        localStorage.setItem('user', JSON.stringify(user));
-        this.userSubject.next(user);
-        return user;
-      }));
+  RegisterUser(user: User) {
+    return this.http.post(`${environment.apiUrl}Auth/createuser`, user);
   }
 }

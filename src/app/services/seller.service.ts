@@ -11,22 +11,22 @@ export class SellerService {
   constructor(private http: HttpClient) { }
 
   GetProducts() {
-    return this.http.get<Product[]>(`${environment.apiUrl}Products/GetAllProducts`);
+    return this.http.get<Product[]>(`${environment.apiUrl}e-auction/api/v1/seller/get-all-products`);
   }
 
   GetProduct(id: string) {
-    return this.http.get<Product>(`${environment.apiUrl}Products/GetProduct/${id}`);
+    return this.http.get<Product>(`${environment.apiUrl}e-auction/api/v1/seller/get-product/${id}`);
   }
 
   AddProduct(product: Product) {
-    return this.http.post<Product>(`${environment.apiUrl}Products/CreateProduct`, product);
+    return this.http.post<Product>(`${environment.apiUrl}e-auction/api/v1/seller/add-product`, product);
   }
 
   UpdateProduct(product: Product) {
-    return this.http.put<Product>(`${environment.apiUrl}Products/UpdateProduct`, product);
+    return this.http.put<Product>(`${environment.apiUrl}e-auction/api/v1/seller/update`, product);
   }
 
   DeleteProduct(id: string) {
-    return this.http.delete<Product>(`${environment.apiUrl}Products/DeleteProduct/${id}`);
+    return this.http.delete<Product>(`${environment.apiUrl}e-auction/api/v1/seller/delete/${id}`);
   }
 }

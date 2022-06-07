@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { RegisterService } from '../services/register.service';
 
 @Component({
   selector: 'app-register',
@@ -7,32 +9,56 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+  hide = true;
+  roles: Role[] = [
+    { name: 'Seller', id: 1 },
+    { name: 'Buyer', id: 2 }
+  ];
 
   registerForm = new FormGroup({
+    id: new FormControl(''),
     firstName: new FormControl(),
     lastName: new FormControl(),
-    address: new FormControl(),
-    city: new FormControl(),
-    state: new FormControl(),
-    pinCode: new FormControl('',[Validators.pattern("^[0-9]{6,6}$"),Validators.minLength(6), Validators.maxLength(6)]),
-    phone: new FormControl('',[Validators.pattern("^[0-9]{10,10}$"),Validators.minLength(10), Validators.maxLength(10)]),
     email: new FormControl('', [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
-    password: new FormControl(),
-    role: new FormControl()
+    password: new FormControl('',
+      [
+        Validators.required,
+        Validators.pattern("^[a-z0-9$@$!%*?&#]{8,20}$")
+      ]),
+    roleId: new FormControl(0)
   });
 
-  constructor() { }
+  constructor(private registerService: RegisterService,
+              private router: Router) { }
 
   ngOnInit(): void {
 
   }
 
   register() {
-
+    if (this.registerForm.valid) {
+      this.registerService.RegisterUser(this.registerForm.value).subscribe(data => {
+        //if (data) {
+        this.registerForm.reset();
+        alert("Registration completed successfully!");
+        this.router.navigateByUrl('/login');
+        //}
+      },
+        error => {
+          alert(`Registration failed!`);
+          throw error;
+        }
+      );
+    }
   }
 
-  Clear(){
+  Clear() {
     this.registerForm.reset();
   }
 
+}
+
+interface Role {
+  name: string;
+  id: number;
 }
