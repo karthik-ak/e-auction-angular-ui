@@ -2,7 +2,9 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { Bid } from 'src/app/model/bid.model';
 import { Product } from 'src/app/model/product.model';
+import { BuyerService } from 'src/app/services/buyer.service';
 import { SellerService } from 'src/app/services/seller.service';
 
 @Component({
@@ -12,6 +14,7 @@ import { SellerService } from 'src/app/services/seller.service';
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
   products: Array<Product> = [];
+  bids: Array<Bid> = [];
   productSelectControl = new FormControl(null, Validators.required);
   today = new Date();
   categories: Category[] = [
@@ -39,7 +42,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   });
 
   displayedColumns: string[] = ['bidAmount', 'name', 'email', 'mobile', 'action'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  dataSource = new MatTableDataSource<Bid>(this.bids);
 
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -48,7 +51,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  constructor(private sellerService: SellerService) { }
+  constructor(private sellerService: SellerService,
+    private buyerService: BuyerService) { }
 
   ngOnInit(): void {
     this.getProducts();
@@ -68,6 +72,17 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.sellerService.GetProduct(this.productSelectControl.value).subscribe(data => {
       this.productForm.reset(data);
     }, error => { throw error });
+    this.getProductBids();
+  }
+
+  getProductBids() {
+    this.buyerService.GetBids(this.productSelectControl.value).subscribe(data => {
+      this.bids = data;
+    },
+      error => {
+        if (!error.ok && error.status != 404)
+          throw error;
+      });
   }
 
   Update() {
