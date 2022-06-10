@@ -1,24 +1,27 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Bid } from '../model/bid.model';
+import { TokenStorageService } from './token-storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BuyerService {
-
-  constructor(private http: HttpClient) { }
+  private bearerToken: string;
+  constructor(private http: HttpClient, private tokenStorage: TokenStorageService) {
+    this.bearerToken = this.tokenStorage.getToken()!;
+   }
 
   GetBids(id: string) {
-    return this.http.get<Bid[]>(`${environment.apiUrl}e-auction/api/v1/seller/show-bids/${id}`);
+    return this.http.get<Bid[]>(`${environment.apiUrl}e-auction/api/v1/seller/show-bids/${id}`, { headers: new HttpHeaders().set('Authorization', `Bearer ${this.bearerToken}`)});
   }
 
   AddBid(bid: Bid) {
-    return this.http.post<Bid>(`${environment.apiUrl}e-auction/api/v1/buyer/place-bid`, bid);
+    return this.http.post<Bid>(`${environment.apiUrl}e-auction/api/v1/buyer/place-bid`, bid, { headers: new HttpHeaders().set('Authorization', `Bearer ${this.bearerToken}`)});
   }
 
   UpdateBid(bid: Bid) {
-    return this.http.put<Bid>(`${environment.apiUrl}e-auction/api/v1/buyer/update-bid/${bid.productId}/${bid.email}/${bid.bidAmount}`, bid);
+    return this.http.put<Bid>(`${environment.apiUrl}e-auction/api/v1/buyer/update-bid/${bid.productId}/${bid.email}/${bid.bidAmount}`, bid, { headers: new HttpHeaders().set('Authorization', `Bearer ${this.bearerToken}`)});
   }
 }
