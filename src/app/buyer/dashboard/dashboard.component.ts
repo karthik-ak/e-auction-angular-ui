@@ -101,7 +101,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   Save() {
-    debugger;
     if (this.biddingForm.valid) {
       if (this.biddingForm.value.productId) {
         this.buyerService.UpdateBid(this.biddingForm.value).subscribe(data => {

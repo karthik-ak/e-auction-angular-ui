@@ -26,7 +26,7 @@ export class SellerService {
   }
 
   UpdateProduct(product: Product) {
-    return this.http.put<Product>(`${environment.apiUrl}e-auction/api/v1/seller/update/`, product, { headers: new HttpHeaders().set('Authorization', `Bearer ${this.bearerToken}`)});
+    return this.http.put<Product>(`${environment.apiUrl}e-auction/api/v1/seller/update`, product, { headers: new HttpHeaders().set('Authorization', `Bearer ${this.bearerToken}`)});
   }
 
   DeleteProduct(id: string) {
