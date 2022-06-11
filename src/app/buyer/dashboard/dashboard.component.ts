@@ -6,6 +6,8 @@ import { BuyerService } from 'src/app/services/buyer.service';
 import { SellerService } from 'src/app/services/seller.service';
 import { Bid } from 'src/app/model/bid.model';
 import { Product } from 'src/app/model/product.model';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { UserInfo } from 'src/app/model/user';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,6 +15,7 @@ import { Product } from 'src/app/model/product.model';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
+  user: UserInfo = new UserInfo;
   products: Array<Product> = [];
   bids: Array<Bid> = [];
   productSelectControl = new FormControl(null, Validators.required);
@@ -67,11 +70,16 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   constructor(private sellerService: SellerService,
-    private buyerService: BuyerService) { }
+    private buyerService: BuyerService,
+    private tokenStorageService: TokenStorageService) { }
 
   ngOnInit(): void {
     this.today.setDate(this.today.getDate() + 1);
     this.getProducts();
+    this.user = this.tokenStorageService.getUser();
+    this.biddingForm.controls["email"].patchValue(this.user.email);
+    this.biddingForm.controls["firstName"].patchValue(this.user.firstName);
+    this.biddingForm.controls["lastName"].patchValue(this.user.lastName);
   }
 
   getProducts() {
@@ -133,6 +141,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   Clear() {
     this.biddingForm.reset();
+    this.biddingForm.controls["email"].patchValue(this.user.email);
+    this.biddingForm.controls["firstName"].patchValue(this.user.firstName);
+    this.biddingForm.controls["lastName"].patchValue(this.user.lastName);
   }
 }
 

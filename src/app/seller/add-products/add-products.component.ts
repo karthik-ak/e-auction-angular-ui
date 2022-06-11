@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UserInfo } from 'src/app/model/user';
 import { SellerService } from 'src/app/services/seller.service';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 
 @Component({
   selector: 'app-add-products',
@@ -8,7 +10,7 @@ import { SellerService } from 'src/app/services/seller.service';
   styleUrls: ['./add-products.component.scss']
 })
 export class AddProductsComponent implements OnInit {
-
+  user: UserInfo = new UserInfo;
   today = new Date();
   categories: Category[] = [
     { name: 'Painting', id: 1 },
@@ -34,10 +36,15 @@ export class AddProductsComponent implements OnInit {
     email: new FormControl('', [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")])
   });
 
-  constructor(private sellerService: SellerService) { }
+  constructor(private sellerService: SellerService,
+    private tokenStorageService: TokenStorageService) { }
 
   ngOnInit(): void {
     this.today.setDate(this.today.getDate() + 1);
+    this.user = this.tokenStorageService.getUser();
+    this.productForm.controls["email"].patchValue(this.user.email);
+    this.productForm.controls["firstName"].patchValue(this.user.firstName);
+    this.productForm.controls["lastName"].patchValue(this.user.lastName);
   }
 
   Save() {
@@ -59,6 +66,9 @@ export class AddProductsComponent implements OnInit {
 
   Clear() {
     this.productForm.reset();
+    this.productForm.controls["email"].patchValue(this.user.email);
+    this.productForm.controls["firstName"].patchValue(this.user.firstName);
+    this.productForm.controls["lastName"].patchValue(this.user.lastName);
   }
 }
 
