@@ -139,7 +139,7 @@
                             </mat-form-field>
                             <mat-card-actions class="text-right">
                                 <button mat-raised-button (click)="Save()" color="primary"
-                                    [disabled]="biddingForm.invalid || productForm.invalid">{{ biddingForm.controls['productId'].value == "" ||
+                                    [disabled]="biddingForm.invalid || productForm.invalid || productForm.controls['bidEndDate'].value <= today">{{ biddingForm.controls['productId'].value == "" ||
                                     biddingForm.controls['productId'].value == null?
                                     "Save":"Update"}}</button>
                                 <button mat-raised-button (click)="Clear()" color="normal">Clear</button>
@@ -168,7 +168,7 @@
                 <!-- Name Column -->
                 <ng-container matColumnDef="name">
                     <th mat-header-cell *matHeaderCellDef> Name </th>
-                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
                 </ng-container>
 
                 <!-- email Column -->
@@ -180,7 +180,7 @@
                 <!-- mobile Column -->
                 <ng-container matColumnDef="mobile">
                     <th mat-header-cell *matHeaderCellDef> Mobile </th>
-                    <td mat-cell *matCellDef="let element"> {{element.mobile}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -188,11 +188,8 @@
             </table>
 
             <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
-                aria-label="Select page of periodic elements">
+                aria-label="Select page of bids">
             </mat-paginator>
         </div>
     </mat-card-content>
-    <mat-card-actions>
-        <!-- <button mat-raised-button (click)="Save()" color="primary">Save</button> -->
-    </mat-card-actions>
 </mat-card>

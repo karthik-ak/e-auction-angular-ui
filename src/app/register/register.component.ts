@@ -25,11 +25,11 @@ export class RegisterComponent implements OnInit {
         Validators.required,
         Validators.pattern("^[a-z0-9$@$!%*?&#]{8,20}$")
       ]),
-    roleId: new FormControl(0)
+    roleId: new FormControl()
   });
 
   constructor(private registerService: RegisterService,
-              private router: Router) { }
+    private router: Router) { }
 
   ngOnInit(): void {
 
@@ -45,7 +45,10 @@ export class RegisterComponent implements OnInit {
         //}
       },
         error => {
-          alert(`Registration failed!`);
+          if (error.error.indexOf("Email already exist") > 1)
+            alert(`Email already exist!`);
+          else
+            alert(`Registration failed!`);
           throw error;
         }
       );

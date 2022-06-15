@@ -17,7 +17,6 @@ import { UserInfo } from 'src/app/model/user';
 export class DashboardComponent implements OnInit, AfterViewInit {
   user: UserInfo = new UserInfo;
   products: Array<Product> = [];
-  bids: Array<Bid> = [];
   productSelectControl = new FormControl(null, Validators.required);
   today = new Date();
 
@@ -60,7 +59,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   });
 
   displayedColumns: string[] = ['bidAmount', 'name', 'email', 'mobile'];
-  dataSource = new MatTableDataSource<Bid>(this.bids);
+  dataSource = new MatTableDataSource<Bid>();
 
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -95,12 +94,25 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.sellerService.GetProduct(this.productSelectControl.value).subscribe(data => {
       this.productForm.reset(data);
     }, error => { throw error });
+    this.getProductBid();
     this.getProductBids();
   }
 
+  getProductBid() {
+    this.Clear();
+    this.buyerService.GetBid(this.productSelectControl.value, this.user.email).subscribe(data => {
+      this.biddingForm.reset(data);
+    },
+      error => {
+        if (!error.ok && error.status != 404)
+          throw error;
+      });
+  }
+
   getProductBids() {
+    this.dataSource.data = [];
     this.buyerService.GetBids(this.productSelectControl.value).subscribe(data => {
-      this.bids = data;
+      this.dataSource.data = data;
     },
       error => {
         if (!error.ok && error.status != 404)
@@ -113,7 +125,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       if (this.biddingForm.value.productId) {
         this.buyerService.UpdateBid(this.biddingForm.value).subscribe(data => {
           if (data) {
-            //this.getProducts();
+            this.getProductBids();
             alert("Bid details saved successfully!");
           }
         },
@@ -127,7 +139,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         this.biddingForm.controls["createdAt"].patchValue(this.today);
         this.buyerService.AddBid(this.biddingForm.value).subscribe(data => {
           if (data) {
-            //this.getProducts();
+            this.getProductBids();
             alert("Bid details saved successfully!");
           }
         },
@@ -151,20 +163,3 @@ interface Category {
   name: string;
   id: number;
 }
-
-interface PeriodicElement {
-  bidAmount: number;
-  name: string;
-  email: string;
-  mobile: number;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { bidAmount: 100, name: 'Ram', email: "ram@hotmail.com", mobile: 985632141 },
-  { bidAmount: 200, name: 'Yogesh', email: "yogesh@gmail.com", mobile: 985632142 },
-  { bidAmount: 300, name: 'Karthik', email: "karthik@outlook.com", mobile: 985632143 },
-  { bidAmount: 400, name: 'Guru', email: "guru@yahoo.com", mobile: 985632144 },
-  { bidAmount: 500, name: 'Venkat', email: "venkat@gmail.com", mobile: 985632145 },
-  { bidAmount: 600, name: 'Rajesh', email: "rajesh@yahoo.co.in", mobile: 985632146 },
-  { bidAmount: 700, name: 'Srinisha', email: "srinisha@gmail.com", mobile: 985632147 }
-];

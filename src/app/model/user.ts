@@ -10,10 +10,10 @@ export class User {
 }
 
 export class UserInfo {
-    id?: number;
-    firstName?: string;
-    lastName?: string;
-    email?: string;
-    role?: Role;
-    token?: string;
+    id: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    role: Role;
+    token: string;
 }

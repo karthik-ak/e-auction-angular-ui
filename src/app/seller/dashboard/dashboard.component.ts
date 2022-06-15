@@ -14,7 +14,6 @@ import { SellerService } from 'src/app/services/seller.service';
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
   products: Array<Product> = [];
-  bids: Array<Bid> = [];
   productSelectControl = new FormControl(null, Validators.required);
   today = new Date();
   categories: Category[] = [
@@ -42,7 +41,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   });
 
   displayedColumns: string[] = ['bidAmount', 'name', 'email', 'mobile', 'action'];
-  dataSource = new MatTableDataSource<Bid>(this.bids);
+  dataSource = new MatTableDataSource<Bid>();
 
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
@@ -76,8 +75,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   getProductBids() {
+    this.dataSource.data = [];
     this.buyerService.GetBids(this.productSelectControl.value).subscribe(data => {
-      this.bids = data;
+      this.dataSource.data = data;
     },
       error => {
         if (!error.ok && error.status != 404)
@@ -129,20 +129,3 @@ interface Category {
   name: string;
   id: number;
 }
-
-interface PeriodicElement {
-  bidAmount: number;
-  name: string;
-  email: string;
-  mobile: number;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { bidAmount: 100, name: 'Ram', email: "ram@hotmail.com", mobile: 985632141 },
-  { bidAmount: 200, name: 'Yogesh', email: "yogesh@gmail.com", mobile: 985632142 },
-  { bidAmount: 300, name: 'Karthik', email: "karthik@outlook.com", mobile: 985632143 },
-  { bidAmount: 400, name: 'Guru', email: "guru@yahoo.com", mobile: 985632144 },
-  { bidAmount: 500, name: 'Venkat', email: "venkat@gmail.com", mobile: 985632145 },
-  { bidAmount: 600, name: 'Rajesh', email: "rajesh@yahoo.co.in", mobile: 985632146 },
-  { bidAmount: 700, name: 'Srinisha', email: "srinisha@gmail.com", mobile: 985632147 }
-];
