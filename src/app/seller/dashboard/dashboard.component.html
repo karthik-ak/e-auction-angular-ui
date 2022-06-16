@@ -69,7 +69,7 @@
                         <button mat-raised-button (click)="Delete()" color="primary"
                             [disabled]="!productForm.valid || dataSource.data.length > 0 || productForm.controls['bidEndDate'].value <= today">Delete</button>
                         <button mat-raised-button (click)="Update()" color="primary"
-                            [disabled]="!productForm.valid">Update</button>
+                            [disabled]="!productForm.valid || dataSource.data.length > 0 || productForm.controls['bidEndDate'].value <= today">Update</button>
                     </mat-card-actions>
                 </div>
             </div>
