@@ -37,19 +37,21 @@ export class AddProductsComponent implements OnInit {
   });
 
   constructor(private sellerService: SellerService,
-    private tokenStorageService: TokenStorageService) { }
+    private tokenStorageService: TokenStorageService) {
+    this.user = this.tokenStorageService.getUser();
+  }
 
   ngOnInit(): void {
     this.today.setDate(this.today.getDate() + 1);
-    this.user = this.tokenStorageService.getUser();
     this.productForm.controls["email"].patchValue(this.user.email);
+    this.productForm.controls["email"].disable();
     this.productForm.controls["firstName"].patchValue(this.user.firstName);
     this.productForm.controls["lastName"].patchValue(this.user.lastName);
   }
 
   Save() {
     if (this.productForm.valid) {
-      this.sellerService.AddProduct(this.productForm.value).subscribe(data => {
+      this.sellerService.AddProduct(this.productForm.getRawValue()).subscribe(data => {
         if (data) {
           this.productForm.reset();
           alert("Product added successfully!");
@@ -67,6 +69,7 @@ export class AddProductsComponent implements OnInit {
   Clear() {
     this.productForm.reset();
     this.productForm.controls["email"].patchValue(this.user.email);
+    this.productForm.controls["email"].disable();
     this.productForm.controls["firstName"].patchValue(this.user.firstName);
     this.productForm.controls["lastName"].patchValue(this.user.lastName);
   }

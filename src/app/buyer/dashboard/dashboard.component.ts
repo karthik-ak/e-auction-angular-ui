@@ -70,12 +70,13 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   constructor(private sellerService: SellerService,
     private buyerService: BuyerService,
-    private tokenStorageService: TokenStorageService) { }
+    private tokenStorageService: TokenStorageService) {
+    this.user = this.tokenStorageService.getUser();
+  }
 
   ngOnInit(): void {
     this.today.setDate(this.today.getDate() + 1);
     this.getProducts();
-    this.user = this.tokenStorageService.getUser();
     this.biddingForm.controls["email"].patchValue(this.user.email);
     this.biddingForm.controls["firstName"].patchValue(this.user.firstName);
     this.biddingForm.controls["lastName"].patchValue(this.user.lastName);
@@ -93,15 +94,21 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   getProduct() {
     this.sellerService.GetProduct(this.productSelectControl.value).subscribe(data => {
       this.productForm.reset(data);
-    }, error => { throw error });
+      this.productForm.disable();
+    }, error => {
+      throw error
+    });
     this.getProductBid();
     this.getProductBids();
   }
 
   getProductBid() {
     this.Clear();
+    this.biddingForm.enable();
     this.buyerService.GetBid(this.productSelectControl.value, this.user.email).subscribe(data => {
       this.biddingForm.reset(data);
+      this.biddingForm.disable();
+      this.biddingForm.controls["bidAmount"].enable();
     },
       error => {
         if (!error.ok && error.status != 404)
@@ -122,8 +129,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   Save() {
     if (this.biddingForm.valid) {
-      if (this.biddingForm.value.productId) {
-        this.buyerService.UpdateBid(this.biddingForm.value).subscribe(data => {
+      const bidFormValue = this.biddingForm.getRawValue();
+      if (bidFormValue.productId) {
+        this.buyerService.UpdateBid(bidFormValue).subscribe(data => {
           if (data) {
             this.getProductBids();
             alert("Bid details saved successfully!");
@@ -137,7 +145,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       else {
         this.biddingForm.controls["productId"].patchValue(this.productForm.value.id);
         this.biddingForm.controls["createdAt"].patchValue(this.today);
-        this.buyerService.AddBid(this.biddingForm.value).subscribe(data => {
+        this.buyerService.AddBid(bidFormValue).subscribe(data => {
           if (data) {
             this.getProductBids();
             alert("Bid details saved successfully!");
@@ -156,6 +164,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.biddingForm.controls["email"].patchValue(this.user.email);
     this.biddingForm.controls["firstName"].patchValue(this.user.firstName);
     this.biddingForm.controls["lastName"].patchValue(this.user.lastName);
+    this.biddingForm.controls["productId"].patchValue('');
   }
 }
 

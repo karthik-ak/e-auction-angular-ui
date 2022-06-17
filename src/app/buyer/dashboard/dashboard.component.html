@@ -28,17 +28,17 @@
                             <mat-form-field class="full-width">
                                 <mat-label>Product Name</mat-label>
                                 <input matInput placeholder="Product name" name="pname" appearance="outline"
-                                    formControlName="productName" readonly>
+                                    formControlName="productName">
                             </mat-form-field>
                             <mat-form-field class="full-width">
                                 <mat-label>Short Description</mat-label>
                                 <input matInput placeholder="Short Description" name="shortdescription"
-                                    formControlName="shortDescription" readonly>
+                                    formControlName="shortDescription">
                             </mat-form-field>
                             <mat-form-field class="full-width">
                                 <mat-label>Detailed Description</mat-label>
                                 <input matInput placeholder="Detailed Description" name="detaileddescription"
-                                    formControlName="longDescription" readonly>
+                                    formControlName="longDescription">
                             </mat-form-field>
                             <mat-form-field class="full-width">
                                 <mat-label>Category</mat-label>
@@ -52,14 +52,14 @@
                             <mat-form-field class="full-width">
                                 <mat-label>Starting Price</mat-label>
                                 <input type="number" matInput placeholder="Starting Price" name="startingprice"
-                                    formControlName="startingPrice" min="1" readonly>
+                                    formControlName="startingPrice" min="1">
                                 <span matPrefix>$ </span>
                                 <span matSuffix>.00</span>
                             </mat-form-field>
                             <mat-form-field class="full-width">
                                 <mat-label>Bid End Date</mat-label>
                                 <input matInput [matDatepicker]="bidenddate" placeholder="Bid End Date"
-                                    formControlName="bidEndDate" readonly>
+                                    formControlName="bidEndDate">
                                 <mat-datepicker-toggle matSuffix [for]="bidenddate" disabled></mat-datepicker-toggle>
                                 <mat-datepicker #bidenddate></mat-datepicker>
                             </mat-form-field>
@@ -107,8 +107,7 @@
                             </mat-form-field>
                             <mat-form-field class="full-width">
                                 <mat-label>Pin Code</mat-label>
-                                <input matInput placeholder="Ex. 685612" name="pinCode" required
-                                    formControlName="pin">
+                                <input matInput placeholder="Ex. 685612" name="pinCode" required formControlName="pin">
                             </mat-form-field>
                         </div>
                         <div class="col-6">
@@ -124,7 +123,7 @@
                             <mat-form-field class="full-width">
                                 <mat-label>Email</mat-label>
                                 <input type="email" matInput placeholder="Ex. johan@gmail.com" name="email" required
-                                    formControlName="email" readonly>
+                                    formControlName="email">
                                 <mat-error
                                     *ngIf="biddingForm.controls['email'].invalid  && biddingForm.controls['email'].value?.length > 0">
                                     Please enter a valid email address
@@ -138,11 +137,13 @@
                                 <span matSuffix>.00</span>
                             </mat-form-field>
                             <mat-card-actions class="text-right">
-                                <button mat-raised-button (click)="Save()" color="primary"
-                                    [disabled]="biddingForm.invalid || productForm.invalid || productForm.controls['bidEndDate'].value <= today">{{ biddingForm.controls['productId'].value == "" ||
+                                <button mat-raised-button (click)="Save()" color="primary" [disabled]="biddingForm.invalid || productForm.invalid || 
+                                    productForm.controls['bidEndDate'].value <= today">{{
+                                    biddingForm.controls['productId'].value == "" ||
                                     biddingForm.controls['productId'].value == null?
                                     "Save":"Update"}}</button>
-                                <button mat-raised-button (click)="Clear()" color="normal">Clear</button>
+                                <button mat-raised-button (click)="Clear()" color="normal"
+                                    [disabled]="biddingForm.controls['productId'].value != ''">Clear</button>
                             </mat-card-actions>
                         </div>
                     </div>
@@ -187,8 +188,7 @@
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
 
-            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
-                aria-label="Select page of bids">
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of bids">
             </mat-paginator>
         </div>
     </mat-card-content>
