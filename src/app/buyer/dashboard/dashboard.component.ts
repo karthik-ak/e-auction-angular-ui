@@ -119,6 +119,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   getProductBids() {
     this.dataSource.data = [];
     this.buyerService.GetBids(this.productSelectControl.value).subscribe(data => {
+      data = data.filter(x => x.email == this.user.email);
       this.dataSource.data = data;
     },
       error => {
