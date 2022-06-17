@@ -14,6 +14,10 @@ export class SellerService {
     return this.http.get<Product[]>(`${environment.apiUrl}e-auction/api/v1/seller/get-all-products`);
   }
 
+  GetProductsByEmail(emailId: string) {
+    return this.http.get<Product[]>(`${environment.apiUrl}e-auction/api/v1/seller/get-products/${emailId}`);
+  }
+
   GetProduct(id: string) {
     return this.http.get<Product>(`${environment.apiUrl}e-auction/api/v1/seller/get-product/${id}`);
   }

@@ -6,6 +6,8 @@ import { Bid } from 'src/app/model/bid.model';
 import { Product } from 'src/app/model/product.model';
 import { BuyerService } from 'src/app/services/buyer.service';
 import { SellerService } from 'src/app/services/seller.service';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
+import { UserInfo } from 'src/app/model/user';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,6 +15,7 @@ import { SellerService } from 'src/app/services/seller.service';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
+  user: UserInfo = new UserInfo;
   products: Array<Product> = [];
   productSelectControl = new FormControl(null, Validators.required);
   today = new Date();
@@ -51,7 +54,10 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   constructor(private sellerService: SellerService,
-    private buyerService: BuyerService) { }
+    private buyerService: BuyerService,
+    private tokenStorageService: TokenStorageService) {
+      this.user = this.tokenStorageService.getUser();
+     }
 
   ngOnInit(): void {
     this.getProducts();
@@ -59,7 +65,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   getProducts() {
-    this.sellerService.GetProducts().subscribe(data => {
+    this.sellerService.GetProductsByEmail(this.user.email).subscribe(data => {
       this.products = data;
     },
       error => {
