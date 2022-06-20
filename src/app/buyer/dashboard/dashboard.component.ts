@@ -78,6 +78,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.today.setDate(this.today.getDate() + 1);
     this.getProducts();
     this.biddingForm.controls["email"].patchValue(this.user.email);
+    this.biddingForm.controls["email"].disable();
     this.biddingForm.controls["firstName"].patchValue(this.user.firstName);
     this.biddingForm.controls["lastName"].patchValue(this.user.lastName);
   }
@@ -95,16 +96,17 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.sellerService.GetProduct(this.productSelectControl.value).subscribe(data => {
       this.productForm.reset(data);
       this.productForm.disable();
+      this.getProductBid();
+      this.getProductBids();
     }, error => {
       throw error
     });
-    this.getProductBid();
-    this.getProductBids();
   }
 
   getProductBid() {
     this.Clear();
-    this.biddingForm.enable();
+    new Date(this.productForm.controls["bidEndDate"].value) < this.today ? this.biddingForm.disable() : this.biddingForm.enable();
+    this.biddingForm.controls["email"].disable();
     this.buyerService.GetBid(this.productSelectControl.value, this.user.email).subscribe(data => {
       this.biddingForm.reset(data);
       this.biddingForm.disable();
@@ -144,8 +146,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
           });
       }
       else {
-        this.biddingForm.controls["productId"].patchValue(this.productForm.value.id);
-        this.biddingForm.controls["createdAt"].patchValue(this.today);
+        bidFormValue.productId = this.productForm.value.id;
+        bidFormValue.createdAt = this.today;
         this.buyerService.AddBid(bidFormValue).subscribe(data => {
           if (data) {
             this.getProductBids();

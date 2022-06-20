@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Bid } from '../model/bid.model';
-import { TokenStorageService } from './token-storage.service';
 
 @Injectable({
   providedIn: 'root'

@@ -56,8 +56,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   constructor(private sellerService: SellerService,
     private buyerService: BuyerService,
     private tokenStorageService: TokenStorageService) {
-      this.user = this.tokenStorageService.getUser();
-     }
+    this.user = this.tokenStorageService.getUser();
+  }
 
   ngOnInit(): void {
     this.getProducts();
@@ -76,6 +76,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   getProduct() {
     this.sellerService.GetProduct(this.productSelectControl.value).subscribe(data => {
       this.productForm.reset(data);
+      new Date(this.productForm.controls["bidEndDate"].value) < this.today ? this.productForm.disable() : this.productForm.enable();
     }, error => { throw error });
     this.getProductBids();
   }
