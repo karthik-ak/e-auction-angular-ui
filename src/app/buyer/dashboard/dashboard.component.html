@@ -4,7 +4,7 @@
 <mat-card class="my-card">
     <mat-card-content>
         <!-- <label>Product Name: </label> -->
-        <mat-form-field appearance="legacy">
+        <mat-form-field appearance="outline">
             <mat-label>Product Name</mat-label>
             <mat-select [formControl]="productSelectControl" required>
                 <mat-option>--Select--</mat-option>
@@ -25,22 +25,22 @@
                 <form class="my-form" [formGroup]="productForm">
                     <div class="row">
                         <div class="col-12">
-                            <mat-form-field class="full-width">
+                            <mat-form-field class="full-width" appearance="outline">
                                 <mat-label>Product Name</mat-label>
                                 <input matInput placeholder="Product name" name="pname" appearance="outline"
                                     formControlName="productName">
                             </mat-form-field>
-                            <mat-form-field class="full-width">
+                            <mat-form-field class="full-width" appearance="outline">
                                 <mat-label>Short Description</mat-label>
                                 <input matInput placeholder="Short Description" name="shortdescription"
                                     formControlName="shortDescription">
                             </mat-form-field>
-                            <mat-form-field class="full-width">
+                            <mat-form-field class="full-width" appearance="outline">
                                 <mat-label>Detailed Description</mat-label>
                                 <input matInput placeholder="Detailed Description" name="detaileddescription"
                                     formControlName="longDescription">
                             </mat-form-field>
-                            <mat-form-field class="full-width">
+                            <mat-form-field class="full-width" appearance="outline">
                                 <mat-label>Category</mat-label>
                                 <mat-select formControlName="category" [disabled]="true">
                                     <mat-option>- Category -</mat-option>
@@ -49,14 +49,14 @@
                                     </mat-option>
                                 </mat-select>
                             </mat-form-field>
-                            <mat-form-field class="full-width">
+                            <mat-form-field class="full-width" appearance="outline">
                                 <mat-label>Starting Price</mat-label>
                                 <input type="number" matInput placeholder="Starting Price" name="startingprice"
                                     formControlName="startingPrice" min="1">
                                 <span matPrefix>$ </span>
                                 <span matSuffix>.00</span>
                             </mat-form-field>
-                            <mat-form-field class="full-width">
+                            <mat-form-field class="full-width" appearance="outline">
                                 <mat-label>Bid End Date</mat-label>
                                 <input matInput [matDatepicker]="bidenddate" placeholder="Bid End Date"
                                     formControlName="bidEndDate">
@@ -78,7 +78,7 @@
                 <form class="my-form" [formGroup]="biddingForm">
                     <div class="row">
                         <div class="col-6">
-                            <mat-form-field class="full-width">
+                            <mat-form-field class="full-width" appearance="outline">
                                 <mat-label>First Name</mat-label>
                                 <input matInput placeholder="First name" name="fname" required
                                     formControlName="firstName" maxlength="30" minlength="5">
@@ -86,32 +86,32 @@
                                 </mat-hint>
                                 <mat-hint align="start">Should have minimum 5 and maximum 30 characters</mat-hint>
                             </mat-form-field>
-                            <mat-form-field class="full-width">
+                            <mat-form-field class="full-width" appearance="outline">
                                 <mat-label>Last Name</mat-label>
                                 <input matInput placeholder="Last Name" name="lname" required formControlName="lastName"
                                     maxlength="25" minlength="5">
                                 <mat-hint align="end">{{biddingForm.controls['lastName'].value?.length}} / 25</mat-hint>
                                 <mat-hint align="start">Should have minimum 5 and maximum 25 characters</mat-hint>
                             </mat-form-field>
-                            <mat-form-field class="full-width">
+                            <mat-form-field class="full-width" appearance="outline">
                                 <mat-label>Address</mat-label>
                                 <input matInput placeholder="Address" name="address" required formControlName="address">
                             </mat-form-field>
-                            <mat-form-field class="full-width">
+                            <mat-form-field class="full-width" appearance="outline">
                                 <mat-label>City</mat-label>
                                 <input matInput placeholder="City" name="city" required formControlName="city">
                             </mat-form-field>
-                            <mat-form-field class="full-width">
+                            <mat-form-field class="full-width" appearance="outline">
                                 <mat-label>State</mat-label>
                                 <input matInput placeholder="State" name="state" required formControlName="state">
                             </mat-form-field>
-                            <mat-form-field class="full-width">
+                            <mat-form-field class="full-width" appearance="outline">
                                 <mat-label>Pin Code</mat-label>
                                 <input matInput placeholder="Ex. 685612" name="pinCode" required formControlName="pin">
                             </mat-form-field>
                         </div>
                         <div class="col-6">
-                            <mat-form-field class="full-width">
+                            <mat-form-field class="full-width" appearance="outline">
                                 <mat-label>Phone</mat-label>
                                 <input type="number" matInput placeholder="Ex. 7895056555" name="phone" required
                                     formControlName="phone">
@@ -120,7 +120,7 @@
                                     Please enter a valid phone number
                                 </mat-error>
                             </mat-form-field>
-                            <mat-form-field class="full-width">
+                            <mat-form-field class="full-width" appearance="outline">
                                 <mat-label>Email</mat-label>
                                 <input type="email" matInput placeholder="Ex. johan@gmail.com" name="email" required
                                     formControlName="email">
@@ -129,7 +129,7 @@
                                     Please enter a valid email address
                                 </mat-error>
                             </mat-form-field>
-                            <mat-form-field class="full-width">
+                            <mat-form-field class="full-width" appearance="outline">
                                 <mat-label>Bidding Price</mat-label>
                                 <input type="number" matInput placeholder="Bidding Price" name="bidAmount" required
                                     formControlName="bidAmount" min="1">

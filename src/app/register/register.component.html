@@ -5,21 +5,21 @@
 <mat-card class="my-card">
    <mat-card-content>
       <form class="my-form" [formGroup]="registerForm">
-         <mat-form-field class="full-width">
+         <mat-form-field class="full-width" appearance="outline">
             <mat-label>First Name</mat-label>
             <input matInput placeholder="First name" name="fname" required formControlName="firstName" maxlength="30"
                minlength="5">
             <mat-hint align="end">{{registerForm.controls['firstName'].value?.length}} / 30</mat-hint>
             <mat-hint align="start">Should have minimum 5 and maximum 30 characters</mat-hint>
          </mat-form-field>
-         <mat-form-field class="full-width">
+         <mat-form-field class="full-width" appearance="outline">
             <mat-label>Last Name</mat-label>
             <input matInput placeholder="Last Name" name="lname" required formControlName="lastName" maxlength="25"
                minlength="5">
             <mat-hint align="end">{{registerForm.controls['lastName'].value?.length}} / 25</mat-hint>
             <mat-hint align="start">Should have minimum 5 and maximum 25 characters</mat-hint>
          </mat-form-field>
-         <mat-form-field class="full-width">
+         <mat-form-field class="full-width" appearance="outline">
             <mat-label>Email</mat-label>
             <input type="email" matInput placeholder="Email" name="email" required formControlName="email">
             <mat-error
@@ -28,7 +28,7 @@
             </mat-error>
             <mat-hint align="start">Ex. johan@gmail.com</mat-hint>
          </mat-form-field>
-         <mat-form-field class="full-width">
+         <mat-form-field class="full-width" appearance="outline">
             <mat-label>Password</mat-label>
             <input matInput [type]="hide ? 'password' : 'text'" placeholder="Login Password" name="password" required
                formControlName="password" minlength="8" maxlength="15">

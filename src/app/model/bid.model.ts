@@ -8,7 +8,7 @@ export class Bid {
     phone?: number;
     email?: string;
     productId?: string;
-    bidAmount?: number;
+    bidAmount: number = 0;
     bidStatus?: string;
     comment?: string;
     createdAt?: Date;

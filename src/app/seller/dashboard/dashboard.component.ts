@@ -8,6 +8,7 @@ import { BuyerService } from 'src/app/services/buyer.service';
 import { SellerService } from 'src/app/services/seller.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 import { UserInfo } from 'src/app/model/user';
+import { max } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -24,6 +25,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     { name: 'Sculptor', id: 2 },
     { name: 'Ornament', id: 3 }
   ];
+  disableProductUpdate: boolean = true;
+  maxBidAmount: number = 0;
+  minBidAmount: number = 0;
 
   productForm = new FormGroup({
     id: new FormControl(''),
@@ -43,7 +47,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     email: new FormControl('', [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")])
   });
 
-  displayedColumns: string[] = ['bidAmount', 'name', 'email', 'mobile', 'action'];
+  displayedColumns: string[] = ['bidAmount', 'name', 'email', 'mobile', 'status', 'action'];
+  columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
   dataSource = new MatTableDataSource<Bid>();
 
   @ViewChild(MatPaginator)
@@ -62,6 +67,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.getProducts();
     this.today.setDate(this.today.getDate() + 1);
+    this.productForm.disable()
   }
 
   getProducts() {
@@ -76,7 +82,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   getProduct() {
     this.sellerService.GetProduct(this.productSelectControl.value).subscribe(data => {
       this.productForm.reset(data);
-      new Date(this.productForm.controls["bidEndDate"].value) < this.today ? this.productForm.disable() : this.productForm.enable();
+      this.disableProductUpdate = new Date(this.productForm.controls["bidEndDate"].value) < this.today;
+      this.disableProductUpdate ? this.productForm.disable() : this.productForm.enable();
     }, error => { throw error });
     this.getProductBids();
   }
@@ -84,7 +91,12 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   getProductBids() {
     this.dataSource.data = [];
     this.buyerService.GetBids(this.productSelectControl.value).subscribe(data => {
-      this.dataSource.data = data;
+      this.maxBidAmount = Math.max(...data.map(x => { return x.bidAmount; }));
+      this.minBidAmount = Math.min(...data.map(x => { return x.bidAmount; }));
+      this.dataSource.data = data.sort((a, b) => b.bidAmount - a.bidAmount);
+      if (!this.disableProductUpdate)
+        this.disableProductUpdate = this.dataSource.data.length > 0;
+      this.disableProductUpdate ? this.productForm.disable() : this.productForm.enable();
     },
       error => {
         if (!error.ok && error.status != 404)

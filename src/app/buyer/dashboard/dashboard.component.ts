@@ -19,7 +19,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   products: Array<Product> = [];
   productSelectControl = new FormControl(null, Validators.required);
   today = new Date();
-  disableBidUpdate: boolean = false;
+  disableBidUpdate: boolean = true;
 
   categories: Category[] = [
     { name: 'Painting', id: 1 },
@@ -81,9 +81,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.today.setDate(this.today.getDate() + 1);
     this.getProducts();
     this.biddingForm.controls["email"].patchValue(this.user.email);
-    this.biddingForm.controls["email"].disable();
     this.biddingForm.controls["firstName"].patchValue(this.user.firstName);
     this.biddingForm.controls["lastName"].patchValue(this.user.lastName);
+    this.productForm.disable();
   }
 
   getProducts() {
@@ -98,7 +98,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   getProduct() {
     this.sellerService.GetProduct(this.productSelectControl.value).subscribe(data => {
       this.productForm.reset(data);
-      this.productForm.disable();
       this.getProductBid();
       this.getProductBids();
     }, error => {
@@ -110,17 +109,14 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.Clear();
     this.disableBidUpdate = new Date(this.productForm.controls["bidEndDate"].value) < this.today;
     this.disableBidUpdate ? this.biddingForm.disable() : this.biddingForm.enable();
-    this.biddingForm.controls["email"].disable();
-    
     this.buyerService.GetBid(this.productSelectControl.value, this.user.email).subscribe(data => {
+      this.biddingForm.disable()
       this.biddingForm.reset(data);
-      this.biddingForm.disable();
 
       if (!this.disableBidUpdate)
         this.disableBidUpdate = this.biddingForm.controls["bidStatus"]?.value == "Accepted" || this.biddingForm.controls["bidStatus"]?.value == "Rejected";
-
-      if (!this.disableBidUpdate)
-        this.biddingForm.controls["bidAmount"].enable();
+        
+      this.disableBidUpdate ? this.biddingForm.controls["bidAmount"].disable() : this.biddingForm.controls["bidAmount"].enable();
     },
       error => {
         if (!error.ok && error.status != 404)
