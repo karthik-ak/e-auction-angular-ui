@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { Bid } from '../model/bid.model';
 import { Product } from '../model/product.model';
 
 @Injectable({
@@ -32,5 +33,13 @@ export class SellerService {
 
   DeleteProduct(id: string) {
     return this.http.delete<Product>(`${environment.apiUrl}e-auction/api/v1/seller/delete/${id}`);
+  }
+
+  AcceptBid(bid: Bid) {
+    return this.http.post<Bid>(`${environment.apiUrl}e-auction/api/v1/buyer/accept-bid`, bid);
+  }
+
+  RejectBid(bid: Bid) {
+    return this.http.post<Bid>(`${environment.apiUrl}e-auction/api/v1/buyer/reject-bid`, bid);
   }
 }

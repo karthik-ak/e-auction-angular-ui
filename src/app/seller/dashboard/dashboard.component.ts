@@ -123,12 +123,30 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     }
   }
 
-  Accept() {
-
+  Accept(bid: Bid) {
+    this.sellerService.AcceptBid(bid).subscribe(data => {
+      if (data) {
+        this.getProductBids();
+        alert("Bidding accepted!");
+      }
+    },
+      error => {
+        alert("Bidding accept failed!");
+        throw error;
+      });
   }
 
-  Reject() {
-
+  Reject(bid: Bid) {
+    this.sellerService.RejectBid(bid).subscribe(data => {
+      if (data) {
+        this.getProductBids();
+        alert("Bidding rejected!");
+      }
+    },
+      error => {
+        alert("Bidding reject failed!");
+        throw error;
+      });
   }
 }
 

@@ -9,5 +9,7 @@ export class Bid {
     email?: string;
     productId?: string;
     bidAmount?: number;
+    bidStatus?: string;
+    comment?: string;
     createdAt?: Date;
 }

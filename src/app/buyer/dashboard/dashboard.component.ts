@@ -19,6 +19,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   products: Array<Product> = [];
   productSelectControl = new FormControl(null, Validators.required);
   today = new Date();
+  disableBidUpdate: boolean = false;
 
   categories: Category[] = [
     { name: 'Painting', id: 1 },
@@ -55,6 +56,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     phone: new FormControl('', [Validators.pattern("^[0-9]{10,10}$"), Validators.minLength(10), Validators.maxLength(10)]),
     email: new FormControl('', [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
     bidAmount: new FormControl(),
+    bidStatus: new FormControl(),
+    comment: new FormControl(),
     createdAt: new FormControl()
   });
 
@@ -105,12 +108,19 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   getProductBid() {
     this.Clear();
-    new Date(this.productForm.controls["bidEndDate"].value) < this.today ? this.biddingForm.disable() : this.biddingForm.enable();
+    this.disableBidUpdate = new Date(this.productForm.controls["bidEndDate"].value) < this.today;
+    this.disableBidUpdate ? this.biddingForm.disable() : this.biddingForm.enable();
     this.biddingForm.controls["email"].disable();
+    
     this.buyerService.GetBid(this.productSelectControl.value, this.user.email).subscribe(data => {
       this.biddingForm.reset(data);
       this.biddingForm.disable();
-      this.biddingForm.controls["bidAmount"].enable();
+
+      if (!this.disableBidUpdate)
+        this.disableBidUpdate = this.biddingForm.controls["bidStatus"]?.value == "Accepted" || this.biddingForm.controls["bidStatus"]?.value == "Rejected";
+
+      if (!this.disableBidUpdate)
+        this.biddingForm.controls["bidAmount"].enable();
     },
       error => {
         if (!error.ok && error.status != 404)
@@ -121,7 +131,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   getProductBids() {
     this.dataSource.data = [];
     this.buyerService.GetBids(this.productSelectControl.value).subscribe(data => {
-      data = data.filter(x => x.email == this.user.email);
+      //data = data.filter(x => x.email == this.user.email);
       this.dataSource.data = data;
     },
       error => {
@@ -136,6 +146,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       if (bidFormValue.productId) {
         this.buyerService.UpdateBid(bidFormValue).subscribe(data => {
           if (data) {
+            this.getProductBid();
             this.getProductBids();
             alert("Bid details saved successfully!");
           }

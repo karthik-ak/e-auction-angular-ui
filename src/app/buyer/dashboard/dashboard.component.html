@@ -137,8 +137,8 @@
                                 <span matSuffix>.00</span>
                             </mat-form-field>
                             <mat-card-actions class="text-right">
-                                <button mat-raised-button (click)="Save()" color="primary" [disabled]="biddingForm.invalid || productForm.invalid || 
-                                    productForm.controls['bidEndDate'].value < today">{{
+                                <button mat-raised-button (click)="Save()" color="primary"
+                                    [disabled]="biddingForm.invalid || productForm.invalid || disableBidUpdate">{{
                                     biddingForm.controls['productId'].value == "" ||
                                     biddingForm.controls['productId'].value == null?
                                     "Save":"Update"}}</button>
