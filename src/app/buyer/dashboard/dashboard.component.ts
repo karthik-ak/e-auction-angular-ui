@@ -81,6 +81,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.today.setDate(this.today.getDate() + 1);
     this.getProducts();
     this.biddingForm.controls["email"].patchValue(this.user.email);
+    this.biddingForm.controls["email"].disable();
     this.biddingForm.controls["firstName"].patchValue(this.user.firstName);
     this.biddingForm.controls["lastName"].patchValue(this.user.lastName);
     this.productForm.disable();
@@ -109,6 +110,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.Clear();
     this.disableBidUpdate = new Date(this.productForm.controls["bidEndDate"].value) < this.today;
     this.disableBidUpdate ? this.biddingForm.disable() : this.biddingForm.enable();
+    this.biddingForm.controls["email"].disable();
     this.buyerService.GetBid(this.productSelectControl.value, this.user.email).subscribe(data => {
       this.biddingForm.disable()
       this.biddingForm.reset(data);
@@ -172,6 +174,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   Clear() {
     this.biddingForm.reset();
     this.biddingForm.controls["email"].patchValue(this.user.email);
+    this.biddingForm.controls["email"].disable();
     this.biddingForm.controls["firstName"].patchValue(this.user.firstName);
     this.biddingForm.controls["lastName"].patchValue(this.user.lastName);
     this.biddingForm.controls["productId"].patchValue('');
