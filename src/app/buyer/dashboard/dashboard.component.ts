@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { BuyerService } from 'src/app/services/buyer.service';
@@ -17,7 +17,7 @@ import { UserInfo } from 'src/app/model/user';
 export class DashboardComponent implements OnInit, AfterViewInit {
   user: UserInfo = new UserInfo;
   products: Array<Product> = [];
-  productSelectControl = new FormControl(null, Validators.required);
+  productSelectControl = new UntypedFormControl(null, Validators.required);
   today = new Date();
   disableBidUpdate: boolean = true;
 
@@ -27,38 +27,38 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     { name: 'Ornament', id: 3 }
   ];
 
-  productForm = new FormGroup({
-    id: new FormControl('', Validators.required),
-    productName: new FormControl('', Validators.required),
-    shortDescription: new FormControl('', Validators.required),
-    longDescription: new FormControl('', Validators.required),
-    category: new FormControl('', Validators.required),
-    startingPrice: new FormControl('', Validators.required),
-    bidEndDate: new FormControl('', Validators.required),
-    firstName: new FormControl(),
-    lastName: new FormControl(),
-    address: new FormControl(),
-    city: new FormControl(),
-    state: new FormControl(),
-    pin: new FormControl('', [Validators.pattern("^[0-9]{6,6}$"), Validators.minLength(6), Validators.maxLength(6)]),
-    phone: new FormControl('', [Validators.pattern("^[0-9]{10,10}$"), Validators.minLength(10), Validators.maxLength(10)]),
-    email: new FormControl('', [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")])
+  productForm = new UntypedFormGroup({
+    id: new UntypedFormControl('', Validators.required),
+    productName: new UntypedFormControl('', Validators.required),
+    shortDescription: new UntypedFormControl('', Validators.required),
+    longDescription: new UntypedFormControl('', Validators.required),
+    category: new UntypedFormControl('', Validators.required),
+    startingPrice: new UntypedFormControl('', Validators.required),
+    bidEndDate: new UntypedFormControl('', Validators.required),
+    firstName: new UntypedFormControl(),
+    lastName: new UntypedFormControl(),
+    address: new UntypedFormControl(),
+    city: new UntypedFormControl(),
+    state: new UntypedFormControl(),
+    pin: new UntypedFormControl('', [Validators.pattern("^[0-9]{6,6}$"), Validators.minLength(6), Validators.maxLength(6)]),
+    phone: new UntypedFormControl('', [Validators.pattern("^[0-9]{10,10}$"), Validators.minLength(10), Validators.maxLength(10)]),
+    email: new UntypedFormControl('', [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")])
   });
 
-  biddingForm = new FormGroup({
-    productId: new FormControl(''),
-    firstName: new FormControl(),
-    lastName: new FormControl(),
-    address: new FormControl(),
-    city: new FormControl(),
-    state: new FormControl(),
-    pin: new FormControl('', [Validators.pattern("^[0-9]{6,6}$"), Validators.minLength(6), Validators.maxLength(6)]),
-    phone: new FormControl('', [Validators.pattern("^[0-9]{10,10}$"), Validators.minLength(10), Validators.maxLength(10)]),
-    email: new FormControl('', [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
-    bidAmount: new FormControl(),
-    bidStatus: new FormControl(),
-    comment: new FormControl(),
-    createdAt: new FormControl()
+  biddingForm = new UntypedFormGroup({
+    productId: new UntypedFormControl(''),
+    firstName: new UntypedFormControl(),
+    lastName: new UntypedFormControl(),
+    address: new UntypedFormControl(),
+    city: new UntypedFormControl(),
+    state: new UntypedFormControl(),
+    pin: new UntypedFormControl('', [Validators.pattern("^[0-9]{6,6}$"), Validators.minLength(6), Validators.maxLength(6)]),
+    phone: new UntypedFormControl('', [Validators.pattern("^[0-9]{10,10}$"), Validators.minLength(10), Validators.maxLength(10)]),
+    email: new UntypedFormControl('', [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
+    bidAmount: new UntypedFormControl(),
+    bidStatus: new UntypedFormControl(),
+    comment: new UntypedFormControl(),
+    createdAt: new UntypedFormControl()
   });
 
   displayedColumns: string[] = ['bidAmount', 'name', 'email', 'mobile'];

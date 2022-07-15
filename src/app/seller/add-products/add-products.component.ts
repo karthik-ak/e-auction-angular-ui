@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { UserInfo } from 'src/app/model/user';
 import { SellerService } from 'src/app/services/seller.service';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
@@ -18,22 +18,22 @@ export class AddProductsComponent implements OnInit {
     { name: 'Ornament', id: 3 }
   ];
 
-  productForm = new FormGroup({
-    id: new FormControl(''),
-    productName: new FormControl(),
-    shortDescription: new FormControl(),
-    longDescription: new FormControl(),
-    category: new FormControl(),
-    startingPrice: new FormControl(),
-    bidEndDate: new FormControl(),
-    firstName: new FormControl(),
-    lastName: new FormControl(),
-    address: new FormControl(),
-    city: new FormControl(),
-    state: new FormControl(),
-    pin: new FormControl('', [Validators.pattern("^[0-9]{6,6}$"), Validators.minLength(6), Validators.maxLength(6)]),
-    phone: new FormControl('', [Validators.pattern("^[0-9]{10,10}$"), Validators.minLength(10), Validators.maxLength(10)]),
-    email: new FormControl('', [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")])
+  productForm = new UntypedFormGroup({
+    id: new UntypedFormControl(''),
+    productName: new UntypedFormControl(),
+    shortDescription: new UntypedFormControl(),
+    longDescription: new UntypedFormControl(),
+    category: new UntypedFormControl(),
+    startingPrice: new UntypedFormControl(),
+    bidEndDate: new UntypedFormControl(),
+    firstName: new UntypedFormControl(),
+    lastName: new UntypedFormControl(),
+    address: new UntypedFormControl(),
+    city: new UntypedFormControl(),
+    state: new UntypedFormControl(),
+    pin: new UntypedFormControl('', [Validators.pattern("^[0-9]{6,6}$"), Validators.minLength(6), Validators.maxLength(6)]),
+    phone: new UntypedFormControl('', [Validators.pattern("^[0-9]{10,10}$"), Validators.minLength(10), Validators.maxLength(10)]),
+    email: new UntypedFormControl('', [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")])
   });
 
   constructor(private sellerService: SellerService,

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RegisterService } from '../services/register.service';
 
@@ -15,17 +15,17 @@ export class RegisterComponent implements OnInit {
     { name: 'Buyer', id: 2 }
   ];
 
-  registerForm = new FormGroup({
-    id: new FormControl(''),
-    firstName: new FormControl(),
-    lastName: new FormControl(),
-    email: new FormControl('', [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
-    password: new FormControl('',
+  registerForm = new UntypedFormGroup({
+    id: new UntypedFormControl(''),
+    firstName: new UntypedFormControl(),
+    lastName: new UntypedFormControl(),
+    email: new UntypedFormControl('', [Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
+    password: new UntypedFormControl('',
       [
         Validators.required,
         Validators.pattern("^[a-z0-9$@$!%*?&#]{8,20}$")
       ]),
-    roleId: new FormControl()
+    roleId: new UntypedFormControl()
   });
 
   constructor(private registerService: RegisterService,
