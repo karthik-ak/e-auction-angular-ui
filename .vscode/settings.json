@@ -1,4 +1,0 @@
-{
-    "appService.defaultWebAppToDeploy": "/subscriptions/fa95f0d3-817e-46dd-8cb5-86ac8f2d8515/microsoft.web/sites/subscriptions/fa95f0d3-817e-46dd-8cb5-86ac8f2d8515/resourceGroups/appsvc_linux_centralus_premium/providers/Microsoft.Web/sites/e-auction-web-app-228222",
-    "appService.deploySubpath": "."
-}
