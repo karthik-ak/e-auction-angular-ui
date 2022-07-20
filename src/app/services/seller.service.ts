@@ -32,7 +32,7 @@ export class SellerService {
   }
 
   DeleteProduct(id: string) {
-    return this.http.delete<Product>(`${environment.apiUrl}DeleteProduct/${id}`);
+    return this.http.delete<Product>(`${environment.apiUrl}func-hackfse-eauction-product/DeleteProduct/${id}`);
   }
 
   AcceptBid(bid: Bid) {
