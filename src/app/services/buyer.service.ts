@@ -12,11 +12,11 @@ export class BuyerService {
   }
 
   GetBids(id: string) {
-    return this.http.get<Bid[]>(`${environment.apiUrl}e-auction/api/v1/seller/show-bids/${id}`);
+    return this.http.get<Bid[]>(`${environment.apiUrl}e-auction/api/v1/buyer/show-bids/${id}`);
   }
 
   GetBid(id: string, emailId: string) {
-    return this.http.get<Bid[]>(`${environment.apiUrl}e-auction/api/v1/seller/show-bid/${id}/${emailId}`);
+    return this.http.get<Bid[]>(`${environment.apiUrl}e-auction/api/v1/buyer/show-bid/${id}/${emailId}`);
   }
 
   AddBid(bid: Bid) {
